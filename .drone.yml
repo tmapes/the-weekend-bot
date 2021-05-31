@@ -4,12 +4,12 @@ name: the-weekend-bot
 
 steps:
   - name: build and test
-    image: adoptopenjdk/openjdk11:jdk-11.0.11_9
+    image: docker.mapes.info/adoptopenjdk/openjdk11:jdk-11.0.11_9-alpine
     environment:
       GRADLE_USER_HOME: .gradle
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1 -Dorg.gradle.parallel=false
     commands:
-      - ./gradlew clean build buildLayers --console rich
+      - ./gradlew clean build buildLayers
 
   - name: docker build dry run
     image: plugins/docker
