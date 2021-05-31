@@ -1,16 +1,23 @@
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.32"
     id("org.jetbrains.kotlin.kapt") version "1.4.32"
-    id("com.github.johnrengelman.shadow") version "7.0.0"
     id("io.micronaut.application") version "1.5.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
+    id("groovy")
 }
 
 version = "0.1"
 group = "the.weekend.bot"
 
 repositories {
-    maven { url = "https://binrepo.mapes.info/repository/maven-central/" }
+    maven {
+        url "https://binrepo.mapes.info/repository/maven-central/"
+    }
+    mavenCentral()
+}
+
+kapt {
+    useBuildCache = false
 }
 
 micronaut {
@@ -23,6 +30,7 @@ micronaut {
 }
 
 dependencies {
+    kapt("io.micronaut:micronaut-inject-java")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut:micronaut-runtime")
@@ -34,25 +42,36 @@ dependencies {
     implementation("io.micronaut:micronaut-validation")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation 'com.discord4j:discord4j-core:3.1.5'
+
+    kaptTest("io.micronaut:micronaut-inject-java")
+    testImplementation("org.codehaus.groovy:groovy-all:${groovyVersion}")
+    testImplementation("org.spockframework:spock-core") {
+        exclude group: "org.codehaus.groovy", module: "groovy-all"
+    }
+    testImplementation("io.micronaut.test:micronaut-test-spock")
 }
 
+allOpen {
+    annotations("javax.inject.Singleton", "io.micronaut.aop.Around")
+}
 
 application {
     mainClass.set("the.weekend.bot.ApplicationKt")
 }
+
 java {
-    sourceCompatibility = JavaVersion.toVersion("11")
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 tasks {
     compileKotlin {
         kotlinOptions {
-            jvmTarget = "11"
+            jvmTarget = JavaVersion.VERSION_11
         }
     }
     compileTestKotlin {
         kotlinOptions {
-            jvmTarget = "11"
+            jvmTarget = JavaVersion.VERSION_11
         }
     }
 

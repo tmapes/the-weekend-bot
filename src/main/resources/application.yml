@@ -9,6 +9,7 @@ jackson:
 discord:
   token: "my-cool-token"
   raw-bot-id: 123124123
+  schedule: "0 0 19 * * FRI"
   channels:
     - name: some-channel-name
       raw-id: 11223344

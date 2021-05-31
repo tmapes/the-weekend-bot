@@ -12,7 +12,7 @@ import javax.inject.Singleton
 data class DiscordClientConfiguration @ConfigurationInject constructor(
     val token: String,
     val rawBotId: Long,
-    val channels: List<ChannelConfiguration>
+    val channels: Set<ChannelConfiguration>
 ) {
     val botId: Snowflake = Snowflake.of(rawBotId)
 }
