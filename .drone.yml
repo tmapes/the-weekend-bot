@@ -9,7 +9,7 @@ steps:
       GRADLE_USER_HOME: .gradle
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1 -Dorg.gradle.parallel=false
     commands:
-      - ./gradlew clean build buildLayers
+      - ./gradlew clean build buildLayers --console rich
 
   - name: docker build dry run
     image: plugins/docker
