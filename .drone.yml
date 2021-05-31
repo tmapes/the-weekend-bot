@@ -4,7 +4,7 @@ name: the-weekend-bot
 
 steps:
   - name: build and test
-    image: docker.mapes.info/adoptopenjdk/openjdk11:jdk-11.0.11_9-alpine
+    image: adoptopenjdk/openjdk11:jdk-11.0.11_9
     environment:
       GRADLE_USER_HOME: .gradle
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1 -Dorg.gradle.parallel=false
