@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: the.weekend.bot
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle
+features: [annotation-api, app-name, gradle, http-client, junit, kotlin, kotlin-application, logback, management, netty-server, readme, shade, yaml]

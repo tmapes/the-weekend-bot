@@ -1,0 +1,15 @@
+micronaut:
+  application:
+    name: theWeekendBot
+
+jackson:
+  deserialization:
+    fail-on-missing-creator-properties: true
+
+discord:
+  token: "my-cool-token"
+  raw-bot-id: 123124123
+  channels:
+    - name: some-channel-name
+      raw-id: 11223344
+      enabled: true
