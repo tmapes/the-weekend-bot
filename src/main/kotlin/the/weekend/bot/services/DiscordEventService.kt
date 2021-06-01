@@ -1,12 +1,14 @@
 package the.weekend.bot.services
 
 import discord4j.core.DiscordClient
+import discord4j.core.event.domain.Event
 import discord4j.core.event.domain.lifecycle.DisconnectEvent
 import discord4j.core.event.domain.lifecycle.ReadyEvent
 import discord4j.core.event.domain.message.MessageCreateEvent
 import io.micronaut.context.annotation.Context
 import org.slf4j.LoggerFactory
 import the.weekend.bot.configs.DiscordClientConfiguration
+import the.weekend.bot.utils.getChannelName
 import javax.annotation.PostConstruct
 import javax.annotation.PreDestroy
 import javax.inject.Singleton
@@ -36,6 +38,8 @@ class DiscordEventService(
                 it.member.get().id != discordClientConfiguration.botId
             }
             .subscribe(::handleMessageCreate)
+
+        client.on(Event::class.java).subscribe(::handleGenericEvent)
     }
 
     @PreDestroy
@@ -54,7 +58,11 @@ class DiscordEventService(
     }
 
     private fun handleMessageCreate(event: MessageCreateEvent) {
-        logger.info("Message Received from '${event.member.get().displayName}' : '${event.message.content}'")
+        logger.info("Message Received in '${event.getChannelName()}' from '${event.member.get().displayName}' : '${event.message.content}'")
+    }
+
+    private fun handleGenericEvent(event: Event) {
+        logger.debug("Unmapped event '${event::class.simpleName}' received from Discord : $event")
     }
 
     private fun handleReady(event: ReadyEvent) {
