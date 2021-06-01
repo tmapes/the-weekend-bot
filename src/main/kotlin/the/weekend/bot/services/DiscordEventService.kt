@@ -26,6 +26,7 @@ class DiscordEventService(
     fun handleStartup() {
         logger.info("Discord Client Create with token ${discordClientConfiguration.token.take(5)}...")
         logger.info("With Channels : ${discordClientConfiguration.channels}")
+        logger.info("Configured with Cron String '${discordClientConfiguration.schedule}'")
 
         client.on(ReadyEvent::class.java).subscribe(::handleReady)
         client.on(DisconnectEvent::class.java).subscribe(::handleDisconnect)

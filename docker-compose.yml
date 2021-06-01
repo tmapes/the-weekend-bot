@@ -1,0 +1,11 @@
+version: "3"
+services:
+  app:
+    image: docker.internal.mapes.info/the-weekend-bot:b12-ddcc597e
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./src/main/resources/application-local.yml:/app/resources/application-local.yml:ro"
+    environment:
+      - MICRONAUT_ENVIRONMENTS=local
+      - DISCORD_SCHEDULE=0/10 * * * * *
