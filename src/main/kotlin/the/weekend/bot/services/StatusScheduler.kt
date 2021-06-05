@@ -12,7 +12,7 @@ class StatusScheduler(
     private val discordEventService: DiscordEventService
 ) {
 
-    @Scheduled(initialDelay = "5s", fixedRate = "10s")
+    @Scheduled(fixedRate = "30s")
     fun updateStatus() {
         // there has to be a better way to do this but i can't be asked right now
         // TODO get better at date manipulation
@@ -25,13 +25,11 @@ class StatusScheduler(
                 .withNano(0)
         }
 
-        val secondsUntil = now.until(nextFridayAtSeven, ChronoUnit.SECONDS)
-        val statusText = NEXT_WEEKEND_TEXT.format(secondsUntil)
-
-        discordEventService.setStatus(statusText)
+        val minutesUntil = NEXT_WEEKEND_TEXT.format(now.until(nextFridayAtSeven, ChronoUnit.MINUTES))
+        discordEventService.setStatus(minutesUntil)
     }
 
     companion object {
-        const val NEXT_WEEKEND_TEXT = "nothing for %d seconds"
+        const val NEXT_WEEKEND_TEXT = "nothing for %d minutes"
     }
 }
