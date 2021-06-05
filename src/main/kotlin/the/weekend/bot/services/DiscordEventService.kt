@@ -1,14 +1,19 @@
 package the.weekend.bot.services
 
 import discord4j.core.DiscordClient
+import discord4j.core.`object`.presence.Activity
+import discord4j.core.`object`.presence.Presence
 import discord4j.core.event.domain.Event
 import discord4j.core.event.domain.lifecycle.DisconnectEvent
 import discord4j.core.event.domain.lifecycle.ReadyEvent
 import discord4j.core.event.domain.message.MessageCreateEvent
+import discord4j.core.event.domain.message.MessageDeleteEvent
+import discord4j.core.event.domain.message.MessageUpdateEvent
+import discord4j.core.event.domain.message.ReactionAddEvent
+import discord4j.core.event.domain.message.ReactionRemoveEvent
 import io.micronaut.context.annotation.Context
 import org.slf4j.LoggerFactory
 import the.weekend.bot.configs.DiscordClientConfiguration
-import the.weekend.bot.utils.getChannelName
 import javax.annotation.PostConstruct
 import javax.annotation.PreDestroy
 import javax.inject.Singleton
@@ -33,12 +38,14 @@ class DiscordEventService(
         client.on(ReadyEvent::class.java).subscribe(::handleReady)
         client.on(DisconnectEvent::class.java).subscribe(::handleDisconnect)
 
-        client.on(MessageCreateEvent::class.java)
-            .filter {
-                it.member.get().id != discordClientConfiguration.botId
-            }
-            .subscribe(::handleMessageCreate)
+        // Ignore these events
+        client.on(MessageCreateEvent::class.java).subscribe(::ignoreEvent)
+        client.on(MessageDeleteEvent::class.java).subscribe(::ignoreEvent)
+        client.on(MessageUpdateEvent::class.java).subscribe(::ignoreEvent)
+        client.on(ReactionAddEvent::class.java).subscribe(::ignoreEvent)
+        client.on(ReactionRemoveEvent::class.java).subscribe(::ignoreEvent)
 
+        // Debug Print any other events
         client.on(Event::class.java).subscribe(::handleGenericEvent)
     }
 
@@ -57,8 +64,16 @@ class DiscordEventService(
             }
     }
 
-    private fun handleMessageCreate(event: MessageCreateEvent) {
-        logger.info("Message Received in '${event.getChannelName()}' from '${event.member.get().displayName}' : '${event.message.content}'")
+    fun setStatus(newStatus: String) {
+        client.updatePresence(
+            Presence.online(
+                Activity.playing(newStatus)
+            )
+        ).block()
+    }
+
+    private fun ignoreEvent(ignored: Event) {
+        // Do nothing with $ignored
     }
 
     private fun handleGenericEvent(event: Event) {
