@@ -7,5 +7,6 @@ fun main(args: Array<String>) {
         .args(*args)
         .packages("the.weekend.bot")
         .banner(false)
+        .eagerInitSingletons(true)
         .start()
 }
