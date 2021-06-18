@@ -21,5 +21,4 @@ class MessageScheduler(
         private const val THE_WEEKEND_LINK = "https://www.youtube.com/watch?v=V_cnK8Cd6Ag"
         const val MESSAGE_CONTENT = "**It's 7pm Somewhere**\n$THE_WEEKEND_LINK"
     }
-
 }

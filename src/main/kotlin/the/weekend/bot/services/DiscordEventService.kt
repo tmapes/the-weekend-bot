@@ -18,7 +18,6 @@ import javax.annotation.PostConstruct
 import javax.annotation.PreDestroy
 import javax.inject.Singleton
 
-
 @Singleton
 @Context
 class DiscordEventService(
@@ -87,5 +86,4 @@ class DiscordEventService(
     private fun handleDisconnect(event: DisconnectEvent) {
         logger.info("Disconnected from Discord! '$event'")
     }
-
 }
