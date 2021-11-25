@@ -1,8 +1,8 @@
 package the.weekend.bot.services
 
 import discord4j.core.DiscordClient
-import discord4j.core.`object`.presence.Activity
-import discord4j.core.`object`.presence.Presence
+import discord4j.core.`object`.presence.ClientActivity
+import discord4j.core.`object`.presence.ClientPresence.online
 import discord4j.core.event.domain.Event
 import discord4j.core.event.domain.lifecycle.DisconnectEvent
 import discord4j.core.event.domain.lifecycle.ReadyEvent
@@ -63,11 +63,9 @@ class DiscordEventService(
             }
     }
 
-    fun setStatus(newStatus: String) {
+    fun setStatus(movieText: String) {
         client.updatePresence(
-            Presence.online(
-                Activity.playing(newStatus)
-            )
+            online(ClientActivity.watching(movieText))
         ).block()
     }
 

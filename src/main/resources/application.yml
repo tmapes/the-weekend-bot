@@ -5,6 +5,7 @@ micronaut:
 jackson:
   deserialization:
     fail-on-missing-creator-properties: true
+  serialization-inclusion: always
 
 discord:
   token: "my-cool-token"
@@ -14,3 +15,161 @@ discord:
     - name: some-channel-name
       raw-id: 11223344
       enabled: true
+
+movies:
+  - title: Interstellar
+    year: 2014
+    length: PT2H49M
+  - title: Tenet
+    year: 2020
+    length: PT2H30M
+  - title: The Prestiege
+    year: 2006
+    length: PT2H10M
+  - length: PT2H42M
+    title: Avatar
+    year: '2009'
+  - length: PT3H21M
+    title: 'The Lord of the Rings: The Return of the King'
+    year: '2003'
+  - length: PT2H31M
+    title: 'Pirates of the Caribbean: Dead Man''s Chest'
+    year: '2006'
+  - length: PT2H32M
+    title: The Dark Knight
+    year: '2008'
+  - length: PT2H32M
+    title: Harry Potter and the Philosopher's Stone
+    year: '2001'
+  - length: PT2H49M
+    title: 'Pirates of the Caribbean: At World''s End'
+    year: '2007'
+  - length: PT2H18M
+    title: Harry Potter and the Order of the Phoenix
+    year: '2007'
+  - length: PT2H33M
+    title: Harry Potter and the Half-Blood Prince
+    year: '2009'
+  - length: PT2H59M
+    title: 'The Lord of the Rings: The Two Towers'
+    year: '2002'
+  - length: PT1H33M
+    title: Shrek 2
+    year: '2004'
+  - length: PT2H37M
+    title: Harry Potter and the Goblet of Fire
+    year: '2005'
+  - length: PT2H19M
+    title: Spider-Man 3
+    year: '2007'
+  - length: PT1H34M
+    title: 'Ice Age: Dawn of the Dinosaurs'
+    year: '2009'
+  - length: PT2H41M
+    title: Harry Potter and the Chamber of Secrets
+    year: '2002'
+  - length: PT2H59M
+    title: 'The Lord of the Rings: The Fellowship of the Ring'
+    year: '2001'
+  - length: PT1H40M
+    title: Finding Nemo
+    year: '2003'
+  - length: PT2H20M
+    title: 'Star Wars: Episode III - Revenge of the Sith'
+    year: '2005'
+  - length: PT2H29M
+    title: 'Transformers: Revenge of the Fallen'
+    year: '2009'
+  - length: PT2H1M
+    title: Spider-Man
+    year: '2002'
+  - length: PT1H33M
+    title: Shrek the Third
+    year: '2007'
+  - length: PT2H21M
+    title: Harry Potter and the Prisoner of Azkaban
+    year: '2004'
+  - length: PT2H2M
+    title: Indiana Jones and the Kingdom of the Crystal Skull
+    year: '2008'
+  - length: PT2H7M
+    title: Spider-Man 2
+    year: '2004'
+  - length: PT2H29M
+    title: The Da Vinci Code
+    year: '2006'
+  - length: PT2H23M
+    title: 'The Chronicles of Narnia: The Lion, the Witch and the Wardrobe'
+    year: '2005'
+  - length: PT2H18M
+    title: The Matrix Reloaded
+    year: '2003'
+  - length: PT2H38M
+    title: '2012'
+    year: '2009'
+  - length: PT2H24M
+    title: Transformers
+    year: '2007'
+  - length: PT1H36M
+    title: Up
+    year: '2009'
+  - length: PT2H11M
+    title: 'The Twilight Saga: New Moon'
+    year: '2009'
+  - length: PT1H31M
+    title: 'Ice Age: The Meltdown'
+    year: '2006'
+  - length: PT2H23M
+    title: 'Pirates of the Caribbean: The Curse of the Black Pearl'
+    year: '2003'
+  - length: PT2H22M
+    title: 'Star Wars: Episode II - Attack of the Clones'
+    year: '2002'
+  - length: PT1H30M
+    title: Kung Fu Panda
+    year: '2008'
+  - length: PT1H55M
+    title: The Incredibles
+    year: '2004'
+  - length: PT1H32M
+    title: Hancock
+    year: '2008'
+  - length: PT1H51M
+    title: Ratatouille
+    year: '2007'
+  - length: PT2H7M
+    title: The Passion of the Christ
+    year: '2004'
+  - length: PT1H48M
+    title: Mamma Mia!
+    year: '2008'
+  - length: PT1H29M
+    title: 'Madagascar: Escape 2 Africa'
+    year: '2008'
+  - length: PT2H24M
+    title: Casino Royale
+    year: '2006'
+  - length: PT1H57M
+    title: War of the Worlds
+    year: '2005'
+  - length: PT1H46M
+    title: Quantum of Solace
+    year: '2008'
+  - length: PT1H41M
+    title: I Am Legend
+    year: '2007'
+  - length: PT2H6M
+    title: Iron Man
+    year: '2008'
+  - length: PT1H48M
+    title: Night at the Museum
+    year: '2006'
+  - length: PT3H7M
+    title: King Kong
+    year: '2005'
+  - length: PT2H4M
+    title: The Day After Tomorrow
+    year: '2004'
+  - length: PT1H26M
+    title: Madagascar
+    year: '2005'

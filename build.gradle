@@ -42,7 +42,7 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation 'com.discord4j:discord4j-core:3.1.5'
+    implementation 'com.discord4j:discord4j-core:3.2.1'
 
     kaptTest("io.micronaut:micronaut-inject-java")
     testImplementation("org.codehaus.groovy:groovy-all:${groovyVersion}")
