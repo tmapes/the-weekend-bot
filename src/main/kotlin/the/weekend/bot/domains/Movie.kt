@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import com.fasterxml.jackson.databind.util.StdDateFormat
-import the.weekend.bot.configs.MovieConfiguration
+import the.weekend.bot.models.TmdbMovie
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
@@ -39,10 +39,10 @@ data class Movie(
         return result
     }
 
-    constructor(movieConfiguration: MovieConfiguration) : this(
-        title = movieConfiguration.title,
-        year = movieConfiguration.year,
-        length = movieConfiguration.length,
+    constructor(movie: TmdbMovie) : this(
+        title = movie.title,
+        year = movie.releaseDate.year,
+        length = Duration.ofMinutes(movie.runtime),
         started = Instant.now(Clock.systemUTC())
     )
 }
