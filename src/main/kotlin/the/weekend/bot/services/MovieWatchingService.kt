@@ -1,8 +1,8 @@
 package the.weekend.bot.services
 
+import io.micronaut.context.annotation.Value
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import the.weekend.bot.configs.MovieConfiguration
 import the.weekend.bot.domains.Movie
 import java.time.Clock
 import java.time.Instant
@@ -11,7 +11,8 @@ import javax.inject.Singleton
 
 @Singleton
 class MovieWatchingService(
-    private val movieList: List<MovieConfiguration>
+    @Value("\${app.max-watch-size:100}") private val maximumWatchSize: Int,
+    private val movieFetchService: MovieFetchService
 ) {
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
@@ -34,10 +35,10 @@ class MovieWatchingService(
             watchedMovies.add(it)
         }
 
-        if (watchedMovies.size >= movieList.size)
+        if (watchedMovies.size >= maximumWatchSize)
             watchedMovies.clear()
 
-        val newMovie = Movie(movieList.random())
+        val newMovie = movieFetchService.getNextMovie()
         if (newMovie !in watchedMovies) {
             currentMovie = newMovie
             logger.info("Starting: $currentMovie")
