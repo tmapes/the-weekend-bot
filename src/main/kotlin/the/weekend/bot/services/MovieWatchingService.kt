@@ -1,13 +1,11 @@
 package the.weekend.bot.services
 
 import io.micronaut.context.annotation.Value
-import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import the.weekend.bot.domains.Movie
 import java.time.Clock
 import java.time.Instant
-import javax.annotation.PostConstruct
 import javax.inject.Singleton
 
 @Singleton
@@ -19,11 +17,6 @@ class MovieWatchingService(
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
     private var currentMovie: Movie? = null
     private val watchedMovies: MutableSet<Movie> = mutableSetOf()
-
-    @PostConstruct
-    fun postConstruct() = runBlocking {
-        getOrStartMovie()
-    }
 
     suspend fun getOrStartMovie(force: Boolean = false): Movie? {
         currentMovie?.let {

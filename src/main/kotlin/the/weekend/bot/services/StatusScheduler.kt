@@ -1,6 +1,7 @@
 package the.weekend.bot.services
 
 import io.micronaut.scheduling.annotation.Scheduled
+import kotlinx.coroutines.runBlocking
 import javax.inject.Singleton
 
 @Singleton
@@ -10,7 +11,7 @@ class StatusScheduler(
 ) {
 
     @Scheduled(fixedRate = "30s")
-    suspend fun updateStatus() {
+    fun updateStatus() = runBlocking {
         movieWatchingService.getOrStartMovie()?.let {
             discordEventService.setStatus(
                 it.toDiscordText()
