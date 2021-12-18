@@ -15,12 +15,12 @@ class MovieController(
 
     @Put("/start_movie")
     @Status(HttpStatus.ACCEPTED)
-    fun startMovie(): Movie? {
+    suspend fun startMovie(): Movie? {
         return movieWatchingService.getOrStartMovie(true)
     }
 
     @Get
-    fun getCurrentMovie(): Movie? {
+    suspend fun getCurrentMovie(): Movie? {
         return movieWatchingService.getOrStartMovie(false)
     }
 }

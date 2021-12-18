@@ -1,6 +1,7 @@
 package the.weekend.bot.services
 
 import io.micronaut.context.annotation.Value
+import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import the.weekend.bot.domains.Movie
@@ -20,11 +21,11 @@ class MovieWatchingService(
     private val watchedMovies: MutableSet<Movie> = mutableSetOf()
 
     @PostConstruct
-    fun postConstruct() {
+    fun postConstruct() = runBlocking {
         getOrStartMovie()
     }
 
-    fun getOrStartMovie(force: Boolean = false): Movie? {
+    suspend fun getOrStartMovie(force: Boolean = false): Movie? {
         currentMovie?.let {
             val endTime = it.started.plus(it.length)
             val now = Instant.now(Clock.systemUTC())
@@ -38,14 +39,20 @@ class MovieWatchingService(
         if (watchedMovies.size >= maximumWatchSize)
             watchedMovies.clear()
 
-        val newMovie = movieFetchService.getNextMovie()
-        if (newMovie !in watchedMovies) {
-            currentMovie = newMovie
-            logger.info("Starting: $currentMovie")
-            return currentMovie!!
-        }
+        try {
+            val newMovie = movieFetchService.getNextMovie()
+            if (newMovie !in watchedMovies) {
+                currentMovie = newMovie
+                logger.info("Starting: $currentMovie")
+                return currentMovie!!
+            }
 
-        currentMovie = null
-        return currentMovie
+            currentMovie = null
+            return currentMovie
+        } catch (ex: Exception) {
+            logger.error("Failed to retrieve a new movie to watch.", ex)
+            currentMovie = null
+            return null
+        }
     }
 }

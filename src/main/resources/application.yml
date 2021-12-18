@@ -1,6 +1,8 @@
 micronaut:
   application:
     name: theWeekendBot
+  server:
+    thread-selection: auto
 
 jackson:
   deserialization:

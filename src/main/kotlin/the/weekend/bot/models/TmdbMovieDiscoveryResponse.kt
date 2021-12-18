@@ -8,7 +8,8 @@ data class TmdbMovieDiscoveryResponse(
 )
 
 data class TmdbDiscoveredMovie(
-    val id: Int
+    val id: Int,
+    @JsonFormat(pattern = "yyyy-MM-dd") val releaseDate: LocalDate
 )
 
 data class TmdbMovie(

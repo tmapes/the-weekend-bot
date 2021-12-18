@@ -10,7 +10,7 @@ class StatusScheduler(
 ) {
 
     @Scheduled(fixedRate = "30s")
-    fun updateStatus() {
+    suspend fun updateStatus() {
         movieWatchingService.getOrStartMovie()?.let {
             discordEventService.setStatus(
                 it.toDiscordText()
