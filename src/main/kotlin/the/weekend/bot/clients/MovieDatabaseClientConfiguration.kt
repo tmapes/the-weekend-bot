@@ -17,5 +17,4 @@ class MovieDatabaseClientConfiguration(
     override fun getConnectionPoolConfiguration(): ConnectionPoolConfiguration {
         return poolSettings
     }
-
 }
