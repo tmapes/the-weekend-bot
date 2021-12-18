@@ -8,7 +8,6 @@ jackson:
   deserialization:
     fail-on-missing-creator-properties: true
   serialization-inclusion: always
-  property-naming-strategy: SNAKE_CASE
 
 discord:
   token: "my-cool-token"
