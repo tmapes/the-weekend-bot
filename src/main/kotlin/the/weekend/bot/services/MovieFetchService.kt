@@ -37,7 +37,7 @@ class MovieFetchService(
         }
         try {
             val nextMovie =
-                movieDatabaseClient.getMovieById(movieId = discoveredMovie.id, apiKey = tmdbApiKey).await().body()
+                movieDatabaseClient.getMovieById(movieId = discoveredMovie.id, appendToResponse = emptySet(), apiKey = tmdbApiKey).await().body()
                     ?: run {
                         logger.error("Failed to get data for $discoveredMovie when performing lookup...")
                         return null

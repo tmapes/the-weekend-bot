@@ -23,6 +23,7 @@ interface MovieDatabaseClient {
     @Get("/3/movie/{movie_id}")
     fun getMovieById(
         @PathVariable("movie_id") movieId: Int,
+        @QueryValue("append_to_response") appendToResponse: Set<String> = setOf("credits", "images"),
         @QueryValue("api_key") apiKey: String
     ): CompletableFuture<HttpResponse<TmdbMovie>>
 }

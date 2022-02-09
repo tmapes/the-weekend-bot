@@ -7,6 +7,7 @@ steps:
     pull: not_present
     environment:
       GRADLE_USER_HOME: .gradle
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
     commands:
       - ./gradlew clean build buildLayers
 
