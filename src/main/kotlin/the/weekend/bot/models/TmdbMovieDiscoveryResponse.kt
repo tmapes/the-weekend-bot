@@ -1,6 +1,7 @@
 package the.weekend.bot.models
 
 import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import java.time.LocalDate
@@ -18,7 +19,39 @@ data class TmdbDiscoveredMovie(
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class TmdbMovie(
+    val id: Int,
     val title: String,
     val runtime: Long,
-    @JsonFormat(pattern = "yyyy-MM-dd") val releaseDate: LocalDate
+    @JsonFormat(pattern = "yyyy-MM-dd") val releaseDate: LocalDate,
+    val tagline: String = "",
+    val credits: TmdbCreditResponse,
+    val homepage: String?,
+    val overview: String?,
+    val revenue: Long?,
+    val images: TmdbImages?
+)
+
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+data class TmdbCreditResponse(
+    val crew: List<TmdbCredit>
+)
+
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+data class TmdbCredit(
+    val name: String,
+    val job: String
+) {
+    fun isDirector() = "DIRECTOR" == job.uppercase()
+}
+
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+data class TmdbImages(
+    val posters: List<TmdbImage>
+)
+
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
+data class TmdbImage(
+    val height: Int?,
+    @JsonProperty("iso_639_1") val isoCode: String?,
+    val filePath: String
 )
