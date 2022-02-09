@@ -25,7 +25,6 @@ data class TmdbMovie(
     @JsonFormat(pattern = "yyyy-MM-dd") val releaseDate: LocalDate,
     val tagline: String = "",
     val credits: TmdbCreditResponse?,
-    val homepage: String?,
     val overview: String?,
     val revenue: Long?,
     val images: TmdbImages?
@@ -51,7 +50,6 @@ data class TmdbImages(
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class TmdbImage(
-    val height: Int?,
     @JsonProperty("iso_639_1") val isoCode: String?,
     val filePath: String
 )
