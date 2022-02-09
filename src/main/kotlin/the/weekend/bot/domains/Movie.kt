@@ -15,7 +15,8 @@ data class Movie(
     val year: Int,
     val length: Duration,
     @JsonFormat(pattern = StdDateFormat.DATE_FORMAT_STR_ISO8601, timezone = "UTC")
-    val started: Instant
+    val started: Instant,
+    val tmdbId: Int,
 ) {
     fun toDiscordText(): String {
         return "$title ($year)"
@@ -29,6 +30,9 @@ data class Movie(
 
         if (title != other.title) return false
         if (year != other.year) return false
+        if (length != other.length) return false
+        if (started != other.started) return false
+        if (tmdbId != other.tmdbId) return false
 
         return true
     }
@@ -36,6 +40,9 @@ data class Movie(
     override fun hashCode(): Int {
         var result = title.hashCode()
         result = 31 * result + year
+        result = 31 * result + length.hashCode()
+        result = 31 * result + started.hashCode()
+        result = 31 * result + tmdbId
         return result
     }
 
@@ -43,6 +50,7 @@ data class Movie(
         title = movie.title,
         year = movie.releaseDate.year,
         length = Duration.ofMinutes(movie.runtime),
-        started = Instant.now(Clock.systemUTC())
+        started = Instant.now(Clock.systemUTC()),
+        tmdbId = movie.id
     )
 }
