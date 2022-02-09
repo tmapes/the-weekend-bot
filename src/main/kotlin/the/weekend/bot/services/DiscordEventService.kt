@@ -1,5 +1,6 @@
 package the.weekend.bot.services
 
+import discord4j.common.util.Snowflake
 import discord4j.core.DiscordClient
 import discord4j.core.`object`.presence.ClientActivity
 import discord4j.core.`object`.presence.ClientPresence.online
@@ -61,6 +62,11 @@ class DiscordEventService(
                 logger.info("Sending to ${it.name}")
                 client.rest().getChannelById(it.id).createMessage(message.trimStart()).block()
             }
+    }
+
+    fun sendMessage(message: String, channelId: Long) {
+        val channelSnowflake = Snowflake.of(channelId)
+        client.rest().getChannelById(channelSnowflake).createMessage(message).block()
     }
 
     fun setStatus(movieText: String) {
