@@ -9,7 +9,7 @@ import the.weekend.bot.models.TmdbMovie
 import the.weekend.bot.models.TmdbMovieDiscoveryResponse
 import java.util.concurrent.CompletableFuture
 
-@Client("https://api.themoviedb.org", configuration = MovieDatabaseClientConfiguration::class)
+@Client("https://api.themoviedb.org")
 interface MovieDatabaseClient {
 
     @Get("/3/movie/top_rated")
@@ -24,5 +24,5 @@ interface MovieDatabaseClient {
     fun getMovieById(
         @PathVariable("movie_id") movieId: Int,
         @QueryValue("api_key") apiKey: String
-    ): TmdbMovie?
+    ): CompletableFuture<HttpResponse<TmdbMovie>>
 }

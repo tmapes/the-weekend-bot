@@ -1,4 +1,4 @@
-FROM docker.mapes.info/adoptopenjdk/openjdk11:alpine-jre
+FROM docker.mapes.info/eclipse-temurin:11.0.13_8-jre-alpine
 
 ENV TZ="America/Chicago"
 

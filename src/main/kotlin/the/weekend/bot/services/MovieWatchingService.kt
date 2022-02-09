@@ -11,7 +11,8 @@ import javax.inject.Singleton
 @Singleton
 class MovieWatchingService(
     @Value("\${app.max-watch-size:100}") private val maximumWatchSize: Int,
-    private val movieFetchService: MovieFetchService
+    private val movieFetchService: MovieFetchService,
+    private val moviePostingService: MovingPostingService
 ) {
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
@@ -27,6 +28,7 @@ class MovieWatchingService(
             }
             logger.info("Movie is over: $currentMovie")
             watchedMovies.add(it)
+            moviePostingService.postWatchedMovie(it)
         }
 
         if (watchedMovies.size >= maximumWatchSize)
@@ -37,7 +39,7 @@ class MovieWatchingService(
             if (newMovie !in watchedMovies) {
                 currentMovie = newMovie
                 logger.info("Starting: $currentMovie")
-                return currentMovie!!
+                return currentMovie
             }
 
             currentMovie = null

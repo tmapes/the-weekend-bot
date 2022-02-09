@@ -1,0 +1,67 @@
+version: "1"
+
+steps:
+
+  - name: build
+    image: docker.mapes.info/eclipse-temurin:11.0.13_8-jdk-alpine
+    pull: not_present
+    environment:
+      GRADLE_USER_HOME: .gradle
+    commands:
+      - ./gradlew clean build buildLayers
+
+  - name: build image dry run
+    image: docker.mapes.info/target/vela-kaniko:latest
+    parameters:
+      dry_run: true
+      repo: docker.internal.mapes.info/the-weekend-bot
+      tags:
+        - dry_run
+    ruleset:
+      event: [pull_request]
+      branch: [main]
+
+  - name: build tag image
+    image: docker.mapes.info/target/vela-kaniko:latest
+    secrets:
+      - source: docker_username
+        target: parameter_username
+      - source: docker_password
+        target: parameter_password
+    parameters:
+      insecure_registries:
+        - docker.internal.mapes.info
+      registry: docker.internal.mapes.info
+      repo: docker.internal.mapes.info/the-weekend-bot
+      mirror: docker.mapes.info
+      tags:
+        - "b${VELA_BUILD_NUMBER}-${VELA_BUILD_COMMIT:0:8}"
+    ruleset:
+      event: push
+      branch: main
+
+  - name: build tag image
+    image: docker.mapes.info/target/vela-kaniko:latest
+    secrets:
+      - source: docker_username
+        target: parameter_username
+      - source: docker_password
+        target: parameter_password
+    parameters:
+      insecure_registries:
+        - docker.internal.mapes.info
+      registry: docker.internal.mapes.info
+      repo: docker.internal.mapes.info/the-weekend-bot
+      mirror: docker.mapes.info
+      tags:
+        - "${VELA_BUILD_TAG:##v}"
+    ruleset:
+      event: tag
+
+secrets:
+  - name: docker_username
+    type: org
+    key: tmapes/docker_username
+  - name: docker_password
+    type: org
+    key: tmapes/docker_password

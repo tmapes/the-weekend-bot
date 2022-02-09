@@ -1,8 +1,8 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.4.32"
-    id("org.jetbrains.kotlin.kapt") version "1.4.32"
+    id("org.jetbrains.kotlin.jvm") version "1.6.10"
+    id("org.jetbrains.kotlin.kapt") version "1.6.10"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.6.10"
     id("io.micronaut.application") version "1.5.0"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
     id("groovy")
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
 }
@@ -42,8 +42,8 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.0")
     implementation 'com.discord4j:discord4j-core:3.2.1'
 
     kaptTest("io.micronaut:micronaut-inject-java")

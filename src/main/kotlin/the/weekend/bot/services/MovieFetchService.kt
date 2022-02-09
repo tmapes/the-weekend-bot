@@ -17,13 +17,15 @@ class MovieFetchService(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     suspend fun getNextMovie(): Movie? {
-        val page = (0..1000).random()
+        val page = (0..500).random()
         val discoveredMovies = movieDatabaseClient.topRatedMovies(apiKey = tmdbApiKey, page = page).await()
+
         if (discoveredMovies.status != HttpStatus.OK) {
             logger.warn("Non OK status from TMDB: ${discoveredMovies.status}")
         }
         val body = discoveredMovies.body()
         if (body == null || body.results.isEmpty()) {
+            logger.error("Null/Empty Body from TMDB : Status: '${discoveredMovies.status}' and body: $body")
             return null
         }
         val discoveredMovie = run {
@@ -33,9 +35,18 @@ class MovieFetchService(
             }
             shouldWatch
         }
-
-        val nextMovie = movieDatabaseClient.getMovieById(movieId = discoveredMovie.id, apiKey = tmdbApiKey) ?: return null
-        return Movie(nextMovie)
+        try {
+            val nextMovie =
+                movieDatabaseClient.getMovieById(movieId = discoveredMovie.id, apiKey = tmdbApiKey).await().body()
+                    ?: run {
+                        logger.error("Failed to get data for $discoveredMovie when performing lookup...")
+                        return null
+                    }
+            return Movie(nextMovie)
+        } catch (ex: Exception) {
+            logger.error("Uber failed to get data for $discoveredMovie", ex)
+        }
+        return null
     }
 
     companion object {
