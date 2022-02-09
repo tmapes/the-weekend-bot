@@ -24,7 +24,7 @@ data class TmdbMovie(
     val runtime: Long,
     @JsonFormat(pattern = "yyyy-MM-dd") val releaseDate: LocalDate,
     val tagline: String = "",
-    val credits: TmdbCreditResponse,
+    val credits: TmdbCreditResponse?,
     val homepage: String?,
     val overview: String?,
     val revenue: Long?,
