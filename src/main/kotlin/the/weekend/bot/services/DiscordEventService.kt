@@ -12,6 +12,8 @@ import discord4j.core.event.domain.message.MessageDeleteEvent
 import discord4j.core.event.domain.message.MessageUpdateEvent
 import discord4j.core.event.domain.message.ReactionAddEvent
 import discord4j.core.event.domain.message.ReactionRemoveEvent
+import discord4j.discordjson.json.EmbedData
+import discord4j.discordjson.json.MessageCreateRequest
 import io.micronaut.context.annotation.Context
 import org.slf4j.LoggerFactory
 import the.weekend.bot.configs.DiscordClientConfiguration
@@ -64,9 +66,10 @@ class DiscordEventService(
             }
     }
 
-    fun sendMessage(message: String, channelId: Long) {
+    fun sendEmbedMessage(message: String, embedData: EmbedData, channelId: Long) {
+        val messageCreateRequest = MessageCreateRequest.builder().content(message).embed(embedData).build()
         val channelSnowflake = Snowflake.of(channelId)
-        client.rest().getChannelById(channelSnowflake).createMessage(message).block()
+        client.rest().getChannelById(channelSnowflake).createMessage(messageCreateRequest).block()
     }
 
     fun setStatus(movieText: String) {
