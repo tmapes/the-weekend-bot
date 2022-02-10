@@ -55,7 +55,7 @@ class MovingPostingService(
             )
 
         if (tmdbMovie?.images?.posters != null) {
-            val image = tmdbMovie.images.posters.firstOrNull { it.isoCode == "en" }
+            val image = tmdbMovie.images.posters.firstOrNull { it.isoCode == "en" } ?: tmdbMovie.images.posters.firstOrNull()
 
             image?.let {
                 val url = "https://www.themoviedb.org/t/p/w1280/${it.filePath}"
