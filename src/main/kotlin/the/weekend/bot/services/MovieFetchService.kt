@@ -17,7 +17,7 @@ class MovieFetchService(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     suspend fun getNextMovie(): Movie? {
-        val page = (0..500).random()
+        val page = (0..499).random()
         val discoveredMovies = movieDatabaseClient.topRatedMovies(apiKey = tmdbApiKey, page = page).await()
 
         if (discoveredMovies.status != HttpStatus.OK) {

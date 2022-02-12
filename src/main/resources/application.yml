@@ -9,6 +9,11 @@ jackson:
     fail-on-missing-creator-properties: true
   serialization-inclusion: always
 
+mongodb:
+  uri: mongodb://username:password@127.0.0.1/movies?authSource=admin
+  database-name: movies
+  collection-name: movies
+
 discord:
   token: "my-cool-token"
   raw-bot-id: 123124123

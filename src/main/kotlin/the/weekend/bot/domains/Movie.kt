@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import com.fasterxml.jackson.databind.util.StdDateFormat
+import the.weekend.bot.entities.MovieWatchingEntity
 import the.weekend.bot.models.TmdbMovie
 import java.time.Clock
 import java.time.Duration
@@ -44,6 +45,12 @@ data class Movie(
         result = 31 * result + started.hashCode()
         result = 31 * result + tmdbId
         return result
+    }
+
+    fun toMovieEntity(finished: Instant?): MovieWatchingEntity {
+        return MovieWatchingEntity(
+            name = title, year = year, length = length.toMinutes(), tmdbId = tmdbId, started = started, finished = finished
+        )
     }
 
     constructor(movie: TmdbMovie) : this(
