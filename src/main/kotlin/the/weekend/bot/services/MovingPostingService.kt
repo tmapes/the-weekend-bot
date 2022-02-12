@@ -49,9 +49,15 @@ class MovingPostingService(
 
         if (tmdbMovie?.overview != null)
             embedDataBuilder.description(tmdbMovie.overview)
-        if (tmdbMovie?.revenue != null)
+
+        if (tmdbMovie?.revenue != null && tmdbMovie.revenue > 0)
             embedDataBuilder.addField(
                 EmbedFieldData.builder().name("Box Office").value(CURRENCY_FORMAT.format(tmdbMovie.revenue)).build()
+            )
+
+        if (tmdbMovie?.budget != null && tmdbMovie.budget > 0)
+            embedDataBuilder.addField(
+                EmbedFieldData.builder().name("Budget").value(CURRENCY_FORMAT.format(tmdbMovie.budget)).build()
             )
 
         if (tmdbMovie?.images?.posters != null) {

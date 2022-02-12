@@ -27,6 +27,7 @@ data class TmdbMovie(
     val credits: TmdbCreditResponse?,
     val overview: String?,
     val revenue: Long?,
+    val budget: Long?,
     val images: TmdbImages?
 )
 
