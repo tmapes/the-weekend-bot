@@ -35,8 +35,7 @@ class MovieWatchingService(
                 return it
             }
             logger.info("Movie is over: $currentMovie")
-            val finished = Instant.now(Clock.systemUTC())
-            movieWatchingRepository.saveMovie(it.toMovieEntity(finished))
+            movieWatchingRepository.saveMovie(it.toMovieEntity(now))
             moviePostingService.postWatchedMovie(it)
         }
 

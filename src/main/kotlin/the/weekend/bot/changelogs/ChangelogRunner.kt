@@ -5,10 +5,7 @@ import com.mongodb.client.MongoDatabase
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
 import io.mongock.driver.mongodb.sync.v4.driver.MongoSync4Driver
-import io.mongock.runner.core.event.MigrationSuccessEvent
 import io.mongock.runner.standalone.MongockStandalone
-
-import org.slf4j.LoggerFactory
 import the.weekend.bot.configs.MongoConfiguration
 import javax.inject.Singleton
 
