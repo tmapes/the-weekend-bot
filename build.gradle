@@ -45,6 +45,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.0")
     implementation 'com.discord4j:discord4j-core:3.2.1'
+    implementation("org.litote.kmongo:kmongo:4.4.0")
+    implementation("io.mongock:mongock-standalone:5.0.29")
+    implementation("io.mongock:mongodb-sync-v4-driver:5.0.29")
 
     kaptTest("io.micronaut:micronaut-inject-java")
     testImplementation("org.codehaus.groovy:groovy-all:${groovyVersion}")
