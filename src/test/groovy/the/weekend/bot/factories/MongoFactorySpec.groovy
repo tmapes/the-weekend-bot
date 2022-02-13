@@ -14,8 +14,20 @@ class MongoFactorySpec extends Specification {
     private def mongoCollectionMock = Mock(MongoCollection)
     private def mongoConfigurationMock = GroovyMock(MongoConfiguration)
 
+    private static def MONGO_URI = "mongodb://127.0.1.1/database"
     private static def DATABASE_NAME = "database"
     private static def COLLECTION_NAME = "collection"
+
+    def "mongoClient() returns a MongoClient"() {
+        when:
+        def database = new MongoFactory().mongoClient(mongoConfigurationMock)
+
+        then:
+        database instanceof MongoClient
+
+        1 * mongoConfigurationMock.getUri() >> MONGO_URI
+        0 * _
+    }
 
     def "mongoDatabase() returns a MongoDatabase"() {
         when:
