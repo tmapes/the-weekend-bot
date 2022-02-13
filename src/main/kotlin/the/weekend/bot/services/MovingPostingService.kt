@@ -1,15 +1,11 @@
 package the.weekend.bot.services
 
-import discord4j.discordjson.json.EmbedData
-import discord4j.discordjson.json.EmbedFieldData
-import discord4j.discordjson.json.EmbedImageData
 import io.micronaut.context.annotation.Value
 import kotlinx.coroutines.future.await
 import org.slf4j.LoggerFactory
 import the.weekend.bot.clients.MovieDatabaseClient
 import the.weekend.bot.domains.Movie
-import java.text.NumberFormat
-import java.util.Currency
+import the.weekend.bot.mappers.TmdbMovieMapper
 import javax.inject.Singleton
 
 @Singleton
@@ -25,63 +21,16 @@ class MovingPostingService(
         val tmdbMovie = try {
             movieDatabaseClient.getMovieById(movieId = movie.tmdbId, apiKey = tmdbApiKey).await().body()
         } catch (ex: Exception) {
-            logger.warn("Failed to lookup '${movie.title} on rotten tomatoes", ex)
+            logger.warn("Failed to lookup '${movie.title} (id: ${movie.tmdbId}) on TMBD", ex)
             null
         }
 
-        val embedDataBuilder = EmbedData.builder()
-            .title(movie.title)
-            .url("https://www.themoviedb.org/movie/${movie.tmdbId}")
-            .color(1234567)
+        val embedData = TmdbMovieMapper.toEmbedData(movie, tmdbMovie)
 
-        val director = tmdbMovie?.credits?.crew?.firstOrNull { it.isDirector() }
-        director?.let {
-            embedDataBuilder.addField(EmbedFieldData.builder().name("Directed by").value(it.name).build())
-        }
-
-        embedDataBuilder.addField(
-            EmbedFieldData.builder()
-                .name("Released")
-                .value(movie.year.toString())
-                .inline(true)
-                .build()
-        )
-
-        if (tmdbMovie?.overview != null)
-            embedDataBuilder.description(tmdbMovie.overview)
-
-        if (tmdbMovie?.revenue != null && tmdbMovie.revenue > 0)
-            embedDataBuilder.addField(
-                EmbedFieldData.builder().name("Box Office").value(CURRENCY_FORMAT.format(tmdbMovie.revenue)).build()
-            )
-
-        if (tmdbMovie?.budget != null && tmdbMovie.budget > 0)
-            embedDataBuilder.addField(
-                EmbedFieldData.builder().name("Budget").value(CURRENCY_FORMAT.format(tmdbMovie.budget)).build()
-            )
-
-        if (tmdbMovie?.images?.posters != null) {
-            val image = tmdbMovie.images.posters.firstOrNull { it.isoCode == "en" } ?: tmdbMovie.images.posters.firstOrNull()
-
-            image?.let {
-                val url = "https://www.themoviedb.org/t/p/w1280/${it.filePath}"
-                embedDataBuilder.image(
-                    EmbedImageData.builder()
-                        .url(url)
-                        .build()
-                )
-            }
-        }
-
-        discordEventService.sendEmbedMessage(MOVIE_FINISHED_TEXT, embedDataBuilder.build(), movieChannelId)
+        discordEventService.sendEmbedMessage(MOVIE_FINISHED_TEXT, embedData, movieChannelId)
     }
 
     companion object {
         const val MOVIE_FINISHED_TEXT = "**Finished a New Movie:**"
-
-        private val CURRENCY_FORMAT = NumberFormat.getCurrencyInstance().apply {
-            maximumFractionDigits = 0
-            currency = Currency.getInstance("USD")
-        }
     }
 }
