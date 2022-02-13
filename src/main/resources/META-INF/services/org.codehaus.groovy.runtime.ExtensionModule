@@ -1,0 +1,3 @@
+moduleName=the-weekend-bot-extension-module
+moduleVersion=1.0.0
+extensionClasses=the.weekend.bot.utils.ExtensionsKt

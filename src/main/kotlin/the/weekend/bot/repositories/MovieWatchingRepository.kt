@@ -21,8 +21,10 @@ class MovieWatchingRepository(
 
     fun getMovieByNameAndYear(name: String, year: Int): MovieWatchingEntity? {
         return movieCollection.findOne {
-            MovieWatchingEntity::name eq name
-            MovieWatchingEntity::year eq year
+            and(
+                MovieWatchingEntity::name eq name,
+                MovieWatchingEntity::year eq year
+            )
         }
     }
 
