@@ -37,6 +37,7 @@ class MovieWatchingService(
             logger.info("Movie is over: $currentMovie")
             movieWatchingRepository.saveMovie(it.toMovieEntity(now))
             moviePostingService.postWatchedMovie(it)
+            currentMovie = null
         }
 
         try {
