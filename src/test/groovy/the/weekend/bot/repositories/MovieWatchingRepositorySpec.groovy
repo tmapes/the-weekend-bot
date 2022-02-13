@@ -42,10 +42,10 @@ class MovieWatchingRepositorySpec extends Specification {
         "null value"     || null
     }
 
-    def "getMovieByNameAndYear works correctly"() {
+    @Unroll
+    def "getMovieByNameAndYear works correctly - #scenario"() {
         given:
         def findIterableMock = Mock(FindIterable)
-        def expected = new MovieWatchingEntity("name", 2020, 1, 1, Instant.EPOCH, Instant.MAX)
         def name = "Movie"
         def year = 1970i
 
@@ -68,5 +68,10 @@ class MovieWatchingRepositorySpec extends Specification {
         1 * findIterableMock.first() >> expected
 
         0 * _
+
+        where:
+        scenario         || expected
+        "non null value" || new MovieWatchingEntity("name", 2020, 1, 1, Instant.EPOCH, Instant.MAX)
+        "null value"     || null
     }
 }
