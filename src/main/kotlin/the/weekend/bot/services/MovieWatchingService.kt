@@ -27,7 +27,8 @@ class MovieWatchingService(
                 currentMovie = it.toMovie()
                 logger.info("Resuming Previous Movie: $it")
             },
-            ifNull = { logger.info("Found no movie to resume.") })
+            ifNull = { logger.info("Found no movie to resume.") }
+        )
     }
 
     suspend fun getOrStartMovie(force: Boolean = false): Movie? {

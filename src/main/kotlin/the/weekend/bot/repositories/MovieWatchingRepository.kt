@@ -31,7 +31,8 @@ class MovieWatchingRepository(
             and(
                 MovieWatchingEntity::name eq movie.name,
                 MovieWatchingEntity::year eq movie.year
-            ), movie, ReplaceOptions().upsert(true)
+            ),
+            movie, ReplaceOptions().upsert(true)
         ).wasAcknowledged()
     }
 }
