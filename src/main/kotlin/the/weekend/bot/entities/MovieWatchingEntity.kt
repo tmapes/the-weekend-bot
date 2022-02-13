@@ -1,14 +1,10 @@
 package the.weekend.bot.entities
 
-import org.bson.codecs.pojo.annotations.BsonId
-import org.bson.types.ObjectId
 import the.weekend.bot.domains.Movie
 import java.time.Duration
 import java.time.Instant
 
 data class MovieWatchingEntity(
-    @BsonId
-    val _id: ObjectId = ObjectId(),
     val name: String,
     val year: Int,
     val length: Long,
@@ -24,5 +20,9 @@ data class MovieWatchingEntity(
             started = started,
             tmdbId = tmdbId
         )
+    }
+
+    override fun toString(): String {
+        return "MovieWatchingEntity(name='$name' ($year), length=$length, tmdbId=$tmdbId, started=$started, finished=$finished)"
     }
 }

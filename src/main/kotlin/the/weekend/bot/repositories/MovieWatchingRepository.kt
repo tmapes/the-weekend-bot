@@ -1,6 +1,8 @@
 package the.weekend.bot.repositories
 
 import com.mongodb.client.MongoCollection
+import com.mongodb.client.model.ReplaceOptions
+import org.litote.kmongo.and
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import the.weekend.bot.entities.MovieWatchingEntity
@@ -25,6 +27,11 @@ class MovieWatchingRepository(
     }
 
     fun saveMovie(movie: MovieWatchingEntity): Boolean {
-        return movieCollection.insertOne(movie).wasAcknowledged()
+        return movieCollection.replaceOne(
+            and(
+                MovieWatchingEntity::name eq movie.name,
+                MovieWatchingEntity::year eq movie.year
+            ), movie, ReplaceOptions().upsert(true)
+        ).wasAcknowledged()
     }
 }
