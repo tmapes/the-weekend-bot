@@ -9,7 +9,7 @@ import the.weekend.bot.mappers.TmdbMovieMapper
 import javax.inject.Singleton
 
 @Singleton
-class MovingPostingService(
+class MoviePostingService(
     private val discordEventService: DiscordEventService,
     private val movieDatabaseClient: MovieDatabaseClient,
     @Value("\${tmdb.api-key}") private val tmdbApiKey: String,

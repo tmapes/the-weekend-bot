@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Singleton
 class MovieWatchingService(
     private val movieFetchService: MovieFetchService,
-    private val moviePostingService: MovingPostingService,
+    private val moviePostingService: MoviePostingService,
     private val movieWatchingRepository: MovieWatchingRepository
 ) : ApplicationEventListener<ServerStartupEvent> {
 
