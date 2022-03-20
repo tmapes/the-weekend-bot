@@ -1,8 +1,8 @@
 package the.weekend.bot.services
 
 import io.micronaut.scheduling.annotation.Scheduled
+import jakarta.inject.Singleton
 import kotlinx.coroutines.runBlocking
-import javax.inject.Singleton
 
 @Singleton
 class StatusScheduler(

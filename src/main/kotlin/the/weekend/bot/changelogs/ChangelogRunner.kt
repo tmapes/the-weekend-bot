@@ -6,8 +6,8 @@ import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
 import io.mongock.driver.mongodb.sync.v4.driver.MongoSync4Driver
 import io.mongock.runner.standalone.MongockStandalone
+import jakarta.inject.Singleton
 import the.weekend.bot.configs.MongoConfiguration
-import javax.inject.Singleton
 
 @Singleton
 class ChangelogRunner(
