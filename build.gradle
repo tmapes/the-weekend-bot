@@ -1,3 +1,11 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://binrepo.mapes.info/repository/gradle/"
+        }
+    }
+}
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.6.10"
     id("org.jetbrains.kotlin.kapt") version "1.6.10"
@@ -14,7 +22,9 @@ repositories {
     maven {
         url "https://binrepo.mapes.info/repository/maven-central/"
     }
-    mavenCentral()
+    maven {
+        url "https://binrepo.mapes.info/repository/gradle/"
+    }
 }
 
 kapt {
