@@ -17,7 +17,7 @@ class MoviePostingService(
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    suspend fun postWatchedMovie(movie: Movie) {
+    suspend fun postStartingMovie(movie: Movie) {
         val tmdbMovie = try {
             movieDatabaseClient.getMovieById(movieId = movie.tmdbId, apiKey = tmdbApiKey).await().body()
         } catch (ex: Exception) {
@@ -27,10 +27,10 @@ class MoviePostingService(
 
         val embedData = TmdbMovieMapper.toEmbedData(movie, tmdbMovie)
 
-        discordEventService.sendEmbedMessage(MOVIE_FINISHED_TEXT, embedData, movieChannelId)
+        discordEventService.sendEmbedMessage(MOVIE_STARTING_TEXT, embedData, movieChannelId)
     }
 
     companion object {
-        const val MOVIE_FINISHED_TEXT = "**Finished a New Movie:**"
+        const val MOVIE_STARTING_TEXT = "**Starting a New Movie:**"
     }
 }
