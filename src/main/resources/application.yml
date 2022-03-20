@@ -3,6 +3,10 @@ micronaut:
     name: theWeekendBot
   server:
     thread-selection: auto
+  http:
+    client:
+      pool:
+        enabled: true
 
 jackson:
   deserialization:

@@ -40,7 +40,6 @@ class MovieWatchingService(
             }
             logger.info("Movie is over: $currentMovie, now: $now, endTime: $endTime")
             movieWatchingRepository.saveMovie(it.toMovieEntity(now))
-            moviePostingService.postWatchedMovie(it)
             currentMovie = null
         }
 
@@ -55,8 +54,10 @@ class MovieWatchingService(
                 currentMovie = newMovie
                 logger.info("Starting: $currentMovie")
                 val success = movieWatchingRepository.saveMovie(it.toMovieEntity(null))
-                if (success)
+                if (success) {
+                    moviePostingService.postStartingMovie(it)
                     return currentMovie
+                }
                 return null
             }
             currentMovie = null
