@@ -2,11 +2,11 @@ package the.weekend.bot.repositories
 
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.ReplaceOptions
+import jakarta.inject.Singleton
 import org.litote.kmongo.and
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import the.weekend.bot.entities.MovieWatchingEntity
-import javax.inject.Singleton
 
 @Singleton
 class MovieWatchingRepository(

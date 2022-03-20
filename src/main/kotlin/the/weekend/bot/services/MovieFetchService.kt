@@ -2,12 +2,12 @@ package the.weekend.bot.services
 
 import io.micronaut.context.annotation.Value
 import io.micronaut.http.HttpStatus
+import jakarta.inject.Singleton
 import kotlinx.coroutines.future.await
 import org.slf4j.LoggerFactory
 import the.weekend.bot.clients.MovieDatabaseClient
 import the.weekend.bot.domains.Movie
 import java.time.LocalDate
-import javax.inject.Singleton
 
 @Singleton
 class MovieFetchService(

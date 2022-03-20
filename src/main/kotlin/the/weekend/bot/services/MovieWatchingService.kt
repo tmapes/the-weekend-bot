@@ -2,6 +2,7 @@ package the.weekend.bot.services
 
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
+import jakarta.inject.Singleton
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import the.weekend.bot.domains.Movie
@@ -9,7 +10,6 @@ import the.weekend.bot.repositories.MovieWatchingRepository
 import the.weekend.bot.utils.letOrElse
 import java.time.Clock
 import java.time.Instant
-import javax.inject.Singleton
 
 @Singleton
 class MovieWatchingService(

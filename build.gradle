@@ -7,10 +7,10 @@ buildscript {
 }
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.6.10"
-    id("org.jetbrains.kotlin.kapt") version "1.6.10"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.6.10"
-    id("io.micronaut.application") version "1.5.0"
+    id("org.jetbrains.kotlin.jvm") version "$kotlinVersion"
+    id("org.jetbrains.kotlin.kapt") version "$kotlinVersion"
+    id("org.jetbrains.kotlin.plugin.allopen") version "$kotlinVersion"
+    id("io.micronaut.application") version "3.3.0"
     id("groovy")
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
 }
@@ -46,18 +46,17 @@ dependencies {
     implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
-    implementation("javax.annotation:javax.annotation-api")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.0")
-    implementation 'com.discord4j:discord4j-core:3.2.1'
-    implementation("org.litote.kmongo:kmongo:4.4.0")
-    implementation("io.mongock:mongock-standalone:5.0.29")
-    implementation("io.mongock:mongodb-sync-v4-driver:5.0.29")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
+    implementation("com.discord4j:discord4j-core:$discord4jVersion")
+    implementation("org.litote.kmongo:kmongo:$kmongoVersion")
+    implementation("io.mongock:mongock-standalone:$mongockVersion")
+    implementation("io.mongock:mongodb-sync-v4-driver:$mongockVersion")
 
     kaptTest("io.micronaut:micronaut-inject-java")
     testImplementation("org.codehaus.groovy:groovy-all:${groovyVersion}")
@@ -68,7 +67,7 @@ dependencies {
 }
 
 allOpen {
-    annotations("javax.inject.Singleton", "io.micronaut.aop.Around")
+    annotations("jakarta.inject.Singleton", "io.micronaut.aop.Around")
 }
 
 application {

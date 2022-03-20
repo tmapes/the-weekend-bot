@@ -1,8 +1,8 @@
 package the.weekend.bot.services
 
 import io.micronaut.scheduling.annotation.Scheduled
+import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
-import javax.inject.Singleton
 
 @Singleton
 class MessageScheduler(

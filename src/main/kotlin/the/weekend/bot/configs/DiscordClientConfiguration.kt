@@ -4,7 +4,7 @@ import discord4j.common.util.Snowflake
 import io.micronaut.context.annotation.ConfigurationInject
 import io.micronaut.context.annotation.ConfigurationProperties
 import io.micronaut.context.annotation.Context
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @Singleton
 @Context

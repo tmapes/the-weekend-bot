@@ -1,12 +1,12 @@
 package the.weekend.bot.services
 
 import io.micronaut.context.annotation.Value
+import jakarta.inject.Singleton
 import kotlinx.coroutines.future.await
 import org.slf4j.LoggerFactory
 import the.weekend.bot.clients.MovieDatabaseClient
 import the.weekend.bot.domains.Movie
 import the.weekend.bot.mappers.TmdbMovieMapper
-import javax.inject.Singleton
 
 @Singleton
 class MoviePostingService(

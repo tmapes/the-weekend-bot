@@ -4,10 +4,10 @@ import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
 import io.micronaut.context.annotation.Factory
+import jakarta.inject.Singleton
 import org.litote.kmongo.KMongo
 import the.weekend.bot.configs.MongoConfiguration
 import the.weekend.bot.entities.MovieWatchingEntity
-import javax.inject.Singleton
 
 @Factory
 class MongoFactory {
