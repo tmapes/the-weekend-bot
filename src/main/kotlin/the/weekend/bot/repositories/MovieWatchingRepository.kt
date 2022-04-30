@@ -6,12 +6,19 @@ import jakarta.inject.Singleton
 import org.litote.kmongo.and
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
+import org.litote.kmongo.ne
 import the.weekend.bot.entities.MovieWatchingEntity
 
 @Singleton
 class MovieWatchingRepository(
     private val movieCollection: MongoCollection<MovieWatchingEntity>
 ) {
+
+    fun getCountOfWatchedMovies(): Long {
+        return movieCollection.countDocuments(
+            MovieWatchingEntity::finished ne null
+        )
+    }
 
     fun getCurrentlyWatchingMovie(): MovieWatchingEntity? {
         return movieCollection.findOne {

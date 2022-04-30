@@ -6,22 +6,27 @@ import discord4j.core.`object`.presence.ClientActivity
 import discord4j.core.`object`.presence.ClientPresence.online
 import discord4j.core.event.domain.lifecycle.DisconnectEvent
 import discord4j.core.event.domain.lifecycle.ReadyEvent
+import discord4j.core.event.domain.message.MessageCreateEvent
 import discord4j.discordjson.json.EmbedData
 import discord4j.discordjson.json.MessageCreateRequest
 import io.micronaut.context.annotation.Context
+import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import the.weekend.bot.configs.DiscordClientConfiguration
+import the.weekend.bot.repositories.MovieWatchingRepository
 import javax.annotation.PostConstruct
 import javax.annotation.PreDestroy
 
 @Context
 class DiscordEventService(
-    private val discordClientConfiguration: DiscordClientConfiguration
+    private val discordClientConfiguration: DiscordClientConfiguration,
+    private val movieWatchingRepository: MovieWatchingRepository
 ) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
     private val rootClient = DiscordClient.create(discordClientConfiguration.token)
     private val client = rootClient.gateway().login().block()!!
+    private val botId = discordClientConfiguration.botId
 
     @PostConstruct
     fun handleStartup() {
@@ -29,6 +34,7 @@ class DiscordEventService(
 
         client.on(ReadyEvent::class.java).subscribe(::handleReady)
         client.on(DisconnectEvent::class.java).subscribe(::handleDisconnect)
+        client.on(MessageCreateEvent::class.java).subscribe(::handleMessage)
     }
 
     @PreDestroy
@@ -57,6 +63,21 @@ class DiscordEventService(
         client.updatePresence(
             online(ClientActivity.watching(movieText))
         ).block()
+    }
+
+    // @BotName !count
+    private fun handleMessage(event: MessageCreateEvent): Unit = runBlocking {
+
+        if (event.member.isPresent && event.member.get().id == botId)
+            return@runBlocking
+        else if (!event.message.userMentionIds.contains(botId))
+            return@runBlocking
+        else if (!event.message.content.endsWith("!count"))
+            return@runBlocking
+
+        with(movieWatchingRepository.getCountOfWatchedMovies()) {
+            sendMessage("$this movies finished")
+        }
     }
 
     private fun handleReady(event: ReadyEvent) {
