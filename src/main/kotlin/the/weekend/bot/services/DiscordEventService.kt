@@ -49,8 +49,12 @@ class DiscordEventService(
             .filter { it.enabled }
             .forEach {
                 logger.info("Sending to ${it.name} : Message: \'$message\'")
-                client.rest().getChannelById(it.id).createMessage(message.trimStart()).block()
+                sendMessage(message.trim(), it.id)
             }
+    }
+
+    fun sendMessage(message: String, channelId: Snowflake) {
+        client.rest().getChannelById(channelId).createMessage(message).block()
     }
 
     fun sendEmbedMessage(message: String, embedData: EmbedData, channelId: Long) {
@@ -76,7 +80,7 @@ class DiscordEventService(
             return@runBlocking
 
         with(movieWatchingRepository.getCountOfWatchedMovies()) {
-            sendMessage("$this movies finished")
+            sendMessage("$this movies finished", event.message.channelId)
         }
     }
 
