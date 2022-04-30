@@ -14,6 +14,23 @@ class MovieWatchingRepositorySpec extends Specification {
     def movieCollectionMock = Mock(MongoCollection)
     def movieWatchingRepository = new MovieWatchingRepository(movieCollectionMock)
 
+    def "getCountOfWatchedMovies works correctly"() {
+        when:
+        def output = movieWatchingRepository.getCountOfWatchedMovies()
+
+        then:
+        1l == output
+        1 * movieCollectionMock.countDocuments(_) >> {Bson filter ->
+            filter = filter.toBsonDocument()
+            assert filter.size() == 1
+            assert filter["finished"].asDocument()["\$ne"] instanceof BsonNull
+
+            return 1
+        }
+
+        0 * _
+    }
+
     @Unroll
     def "getCurrentlyWatchingMovie works correctly - #scenario"() {
         given:
