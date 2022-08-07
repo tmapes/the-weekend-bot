@@ -12,6 +12,7 @@ jackson:
   deserialization:
     fail-on-missing-creator-properties: true
   serialization-inclusion: always
+  time-zone: UTC
 
 mongodb:
   uri: mongodb://username:password@127.0.0.1/movies?authSource=admin

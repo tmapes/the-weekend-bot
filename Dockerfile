@@ -1,6 +1,6 @@
 FROM docker.mapes.info/eclipse-temurin:11.0.13_8-jre-alpine
 
-ENV TZ="America/Chicago"
+ENV TZ="UTC"
 
 COPY build/docker/main/layers/libs /app/libs
 COPY build/docker/main/layers/resources /app/resources
