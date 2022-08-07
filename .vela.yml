@@ -12,7 +12,7 @@ steps:
       - ./gradlew clean build buildLayers
 
   - name: build image dry run
-    image: docker.mapes.info/target/vela-kaniko:latest
+    image: docker.mapes.info/target/vela-kaniko:v0.7.1
     parameters:
       dry_run: true
       repo: docker.internal.mapes.info/the-weekend-bot
@@ -23,7 +23,7 @@ steps:
       branch: [main]
 
   - name: build tag image
-    image: docker.mapes.info/target/vela-kaniko:latest
+    image: docker.mapes.info/target/vela-kaniko:v0.7.1
     secrets:
       - source: docker_username
         target: parameter_username
@@ -42,7 +42,7 @@ steps:
       branch: main
 
   - name: build tag image
-    image: docker.mapes.info/target/vela-kaniko:latest
+    image: docker.mapes.info/target/vela-kaniko:v0.7.1
     secrets:
       - source: docker_username
         target: parameter_username
