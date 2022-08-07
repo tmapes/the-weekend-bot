@@ -71,12 +71,11 @@ class DiscordEventService(
         ).block()
     }
 
-    // @BotName !count
+    // !count
+    // !watched <search query>
     private fun handleMessage(event: MessageCreateEvent): Unit = runBlocking {
 
         if (event.member.isPresent && event.member.get().id == botId)
-            return@runBlocking
-        else if (!event.message.userMentionIds.contains(botId))
             return@runBlocking
 
         if (event.message.content.endsWith("!count")) {
