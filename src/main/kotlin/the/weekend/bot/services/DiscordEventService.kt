@@ -2,11 +2,11 @@ package the.weekend.bot.services
 
 import discord4j.common.util.Snowflake
 import discord4j.core.DiscordClient
-import discord4j.core.`object`.presence.ClientActivity
-import discord4j.core.`object`.presence.ClientPresence.online
 import discord4j.core.event.domain.lifecycle.DisconnectEvent
 import discord4j.core.event.domain.lifecycle.ReadyEvent
 import discord4j.core.event.domain.message.MessageCreateEvent
+import discord4j.core.`object`.presence.ClientActivity
+import discord4j.core.`object`.presence.ClientPresence.online
 import discord4j.discordjson.json.EmbedData
 import discord4j.discordjson.json.MessageCreateRequest
 import io.micronaut.context.annotation.Context
@@ -79,7 +79,7 @@ class DiscordEventService(
         else if (!event.message.userMentionIds.contains(botId))
             return@runBlocking
 
-        if(event.message.content.endsWith("!count")) {
+        if (event.message.content.endsWith("!count")) {
             with(movieWatchingRepository.getCountOfWatchedMovies()) {
                 sendMessage("$this movies finished", event.message.channelId)
             }
@@ -89,6 +89,12 @@ class DiscordEventService(
         if (attemptWatchSearch(event))
             return@runBlocking
 
+        // no match, send help text
+        sendMessage(
+            "Command not matched, valid commands:\n!count\n!watched <search text>",
+            event.message.channelId
+        )
+        return@runBlocking
     }
 
     private fun handleReady(event: ReadyEvent) {
@@ -106,7 +112,7 @@ class DiscordEventService(
             with(movieWatchingRepository.searchForWatchedMovie(watchQuery)) {
                 val movieCount = this.count()
                 logger.info("Searching for '$watchQuery' matched $movieCount movies")
-                if (movieCount <= 0){
+                if (movieCount <= 0) {
                     sendMessage("No movies watched matching '$watchQuery'", event.message.channelId)
                     return true
                 }
