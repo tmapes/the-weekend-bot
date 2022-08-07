@@ -77,6 +77,8 @@ class DiscordEventService(
 
         if (event.member.isPresent && event.member.get().id == botId)
             return@runBlocking
+        else if (!event.message.userMentionIds.contains(botId))
+            return@runBlocking
 
         if (event.message.content.endsWith("!count")) {
             with(movieWatchingRepository.getCountOfWatchedMovies()) {
