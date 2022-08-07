@@ -1,6 +1,7 @@
 package the.weekend.bot.repositories
 
 import com.mongodb.client.MongoCollection
+import com.mongodb.client.model.Filters.text
 import com.mongodb.client.model.ReplaceOptions
 import jakarta.inject.Singleton
 import org.litote.kmongo.and
@@ -43,5 +44,9 @@ class MovieWatchingRepository(
             ),
             movie, ReplaceOptions().upsert(true)
         ).wasAcknowledged()
+    }
+
+    fun searchForWatchedMovie(searchText: String): Sequence<MovieWatchingEntity> {
+        return movieCollection.find(text(searchText)).asSequence()
     }
 }
