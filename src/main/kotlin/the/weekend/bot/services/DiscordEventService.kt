@@ -14,6 +14,8 @@ import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import the.weekend.bot.configs.DiscordClientConfiguration
 import the.weekend.bot.repositories.MovieWatchingRepository
+import the.weekend.bot.utils.getMessage
+import the.weekend.bot.utils.getWatchedQuery
 import javax.annotation.PostConstruct
 import javax.annotation.PreDestroy
 
@@ -76,12 +78,23 @@ class DiscordEventService(
             return@runBlocking
         else if (!event.message.userMentionIds.contains(botId))
             return@runBlocking
-        else if (!event.message.content.endsWith("!count"))
+
+        if (event.message.content.endsWith("!count")) {
+            with(movieWatchingRepository.getCountOfWatchedMovies()) {
+                sendMessage("$this movies finished", event.message.channelId)
+            }
+            return@runBlocking
+        }
+
+        if (attemptWatchSearch(event))
             return@runBlocking
 
-        with(movieWatchingRepository.getCountOfWatchedMovies()) {
-            sendMessage("$this movies finished", event.message.channelId)
-        }
+        // no match, send help text
+        sendMessage(
+            "Command not matched, valid commands:\n!count\n!watched <search text>",
+            event.message.channelId
+        )
+        return@runBlocking
     }
 
     private fun handleReady(event: ReadyEvent) {
@@ -90,5 +103,23 @@ class DiscordEventService(
 
     private fun handleDisconnect(event: DisconnectEvent) {
         logger.info("Disconnected from Discord! '$event'")
+    }
+
+    protected fun attemptWatchSearch(event: MessageCreateEvent): Boolean {
+        val watchQuery = event.getWatchedQuery()
+        if (watchQuery.isNotEmpty()) {
+            logger.info("Searching for watched movies that match '$watchQuery'")
+            with(movieWatchingRepository.searchForWatchedMovie(watchQuery)) {
+                val movieCount = this.count()
+                logger.info("Searching for '$watchQuery' matched $movieCount movies")
+                if (movieCount <= 0) {
+                    sendMessage("No movies watched matching '$watchQuery'", event.message.channelId)
+                    return true
+                }
+                sendMessage(this.getMessage(), event.message.channelId)
+            }
+            return true
+        }
+        return false
     }
 }

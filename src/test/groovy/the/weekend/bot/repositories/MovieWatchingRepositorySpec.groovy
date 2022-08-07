@@ -2,8 +2,11 @@ package the.weekend.bot.repositories
 
 import com.mongodb.client.FindIterable
 import com.mongodb.client.MongoCollection
+import com.mongodb.client.model.Filters
+import kotlin.sequences.Sequence
 import org.bson.BsonNull
 import org.bson.conversions.Bson
+import reactor.core.publisher.Mono
 import spock.lang.Specification
 import spock.lang.Unroll
 import the.weekend.bot.entities.MovieWatchingEntity
@@ -90,5 +93,25 @@ class MovieWatchingRepositorySpec extends Specification {
         scenario         || expected
         "non null value" || new MovieWatchingEntity("name", 2020, 1, 1, Instant.EPOCH, Instant.MAX)
         "null value"     || null
+    }
+
+    def "searchForWatchedMovie works as expected"() {
+        given:
+        def searchTerm = "text"
+        def findIterableMock = Mock(FindIterable)
+
+        when:
+        def output = movieWatchingRepository.searchForWatchedMovie(searchTerm)
+
+        then:
+        1 * movieCollectionMock.find(_) >> { Bson filter ->
+            assert filter instanceof Filters.TextFilter
+            searchTerm == filter.search
+
+            return findIterableMock
+        }
+        output
+
+        0  * _
     }
 }
