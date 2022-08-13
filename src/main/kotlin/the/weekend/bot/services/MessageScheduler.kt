@@ -11,7 +11,7 @@ class MessageScheduler(
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    @Scheduled(cron = "\${discord.schedule}", zoneId = "America/Chicago")
+    @Scheduled(cron = "\${discord.schedule}")
     fun sendIt() {
         logger.info("sendIt Triggered")
         discordEventService.sendMessage(MESSAGE_CONTENT)
