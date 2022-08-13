@@ -10,7 +10,7 @@ import javax.inject.Named
 @ChangeUnit(id = "collection-init", order = "1", author = "tmapes")
 class CollectionChangeUnit(
     @Named("mongoDatabase") private val mongoDatabase: MongoDatabase,
-    @Named("mongoDatabase") private val mongoConfiguration: MongoConfiguration
+    @Named("mongoConfiguration") private val mongoConfiguration: MongoConfiguration
 ) {
 
     @Execution

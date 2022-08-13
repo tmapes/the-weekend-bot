@@ -7,6 +7,9 @@ micronaut:
     client:
       pool:
         enabled: true
+  health:
+    monitor:
+      enabled: false
 
 jackson:
   deserialization:
