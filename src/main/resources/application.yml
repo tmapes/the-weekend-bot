@@ -25,7 +25,7 @@ mongodb:
 discord:
   token: "my-cool-token"
   raw-bot-id: 123124123
-  schedule: "0 0 0 * * FRI"
+  schedule: "0 0 0 * * SAT"
   channels:
     - name: some-channel-name
       raw-id: 11223344
