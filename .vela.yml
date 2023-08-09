@@ -5,33 +5,29 @@ steps:
   - name: build
     image: eclipse-temurin:11.0.13_8-jdk-alpine
     pull: not_present
+    ruleset:
+      unless:
+        event: pull_request
     commands:
       - ./gradlew clean build buildLayers
 
   - name: build image dry run
-    image: target/vela-kaniko:v0.7.1
-    environment:
-      - container=docker
+    image: target/vela-kaniko:v0.13.0
     parameters:
       dry_run: true
-      repo: docker.internal.mapes.info/the-weekend-bot
+      repo: index.docker.io/tjmapes/the-weekend-bot
+      mirror: docker.mapes.info
       tags:
         - dry_run
     ruleset:
-      event: [pull_request]
-      branch: [main]
+      event: [ pull_request ]
+      branch: [ main ]
 
   - name: build tag image
-    image: target/vela-kaniko:v0.7.1
-    environment:
-      - container=docker
-    secrets:
-      - source: docker_username
-        target: parameter_username
-      - source: docker_password
-        target: parameter_password
+    image: target/vela-kaniko:v0.13.0
+    secrets: [ docker_username, docker_password ]
     parameters:
-      repo: docker.io/the-weekend-bot
+      repo: index.docker.io/tjmapes/the-weekend-bot
       mirror: docker.mapes.info
       tags:
         - "b${VELA_BUILD_NUMBER}-${VELA_BUILD_COMMIT:0:8}"
@@ -40,16 +36,10 @@ steps:
       branch: main
 
   - name: build tag image
-    image: target/vela-kaniko:v0.7.1
-    environment:
-      - container=docker
-    secrets:
-      - source: docker_username
-        target: parameter_username
-      - source: docker_password
-        target: parameter_password
+    image: target/vela-kaniko:v0.13.0
+    secrets: [ docker_username, docker_password ]
     parameters:
-      repo: docker.io/the-weekend-bot
+      repo: index.docker.io/tjmapes/the-weekend-bot
       mirror: docker.mapes.info
       tags:
         - "${VELA_BUILD_TAG:##v}"
