@@ -5,9 +5,6 @@ steps:
   - name: build
     image: eclipse-temurin:11.0.13_8-jdk-alpine
     pull: not_present
-    ruleset:
-      unless:
-        event: pull_request
     commands:
       - ./gradlew clean build buildLayers
 
