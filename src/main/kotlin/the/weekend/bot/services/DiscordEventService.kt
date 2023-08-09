@@ -10,14 +10,14 @@ import discord4j.core.event.domain.message.MessageCreateEvent
 import discord4j.discordjson.json.EmbedData
 import discord4j.discordjson.json.MessageCreateRequest
 import io.micronaut.context.annotation.Context
+import jakarta.annotation.PostConstruct
+import jakarta.annotation.PreDestroy
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import the.weekend.bot.configs.DiscordClientConfiguration
 import the.weekend.bot.repositories.MovieWatchingRepository
 import the.weekend.bot.utils.getMessage
 import the.weekend.bot.utils.getWatchedQuery
-import jakarta.annotation.PostConstruct
-import jakarta.annotation.PreDestroy
 
 @Context
 class DiscordEventService(
