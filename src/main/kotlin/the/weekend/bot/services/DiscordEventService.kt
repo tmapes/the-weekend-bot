@@ -16,8 +16,8 @@ import the.weekend.bot.configs.DiscordClientConfiguration
 import the.weekend.bot.repositories.MovieWatchingRepository
 import the.weekend.bot.utils.getMessage
 import the.weekend.bot.utils.getWatchedQuery
-import javax.annotation.PostConstruct
-import javax.annotation.PreDestroy
+import jakarta.annotation.PostConstruct
+import jakarta.annotation.PreDestroy
 
 @Context
 class DiscordEventService(

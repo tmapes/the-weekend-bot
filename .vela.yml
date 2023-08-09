@@ -3,7 +3,7 @@ version: "1"
 steps:
 
   - name: build
-    image: eclipse-temurin:11.0.13_8-jdk-alpine
+    image: eclipse-temurin:17.0.8_7-jdk-alpine
     pull: not_present
     commands:
       - ./gradlew clean build buildLayers

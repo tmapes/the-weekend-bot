@@ -1,16 +1,8 @@
-buildscript {
-    repositories {
-        maven {
-            url "https://binrepo.mapes.info/repository/gradle/"
-        }
-    }
-}
-
 plugins {
     id("org.jetbrains.kotlin.jvm") version "$kotlinVersion"
     id("org.jetbrains.kotlin.kapt") version "$kotlinVersion"
     id("org.jetbrains.kotlin.plugin.allopen") version "$kotlinVersion"
-    id("io.micronaut.application") version "3.4.0"
+    id("io.micronaut.application") version "3.7.10"
     id("groovy")
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
 }
@@ -25,10 +17,6 @@ repositories {
     maven {
         url "https://binrepo.mapes.info/repository/gradle/"
     }
-}
-
-kapt {
-    useBuildCache = false
 }
 
 micronaut {
@@ -74,20 +62,6 @@ application {
     mainClass.set("the.weekend.bot.ApplicationKt")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-}
-
-tasks {
-    compileKotlin {
-        kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_11
-        }
-    }
-    compileTestKotlin {
-        kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_11
-        }
-    }
-
+kotlin {
+    jvmToolchain(17)
 }
