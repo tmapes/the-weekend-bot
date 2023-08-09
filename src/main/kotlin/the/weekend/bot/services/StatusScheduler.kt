@@ -10,7 +10,7 @@ class StatusScheduler(
     private val movieWatchingService: MovieWatchingService
 ) {
 
-    @Scheduled(fixedRate = "30s", initialDelay = "10s")
+    @Scheduled(fixedRate = "1m", initialDelay = "1m")
     fun updateStatus() = runBlocking {
         movieWatchingService.getOrStartMovie()?.let {
             discordEventService.setStatus(

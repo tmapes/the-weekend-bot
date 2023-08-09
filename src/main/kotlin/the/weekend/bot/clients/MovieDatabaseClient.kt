@@ -9,7 +9,7 @@ import the.weekend.bot.models.TmdbMovie
 import the.weekend.bot.models.TmdbMovieDiscoveryResponse
 import java.util.concurrent.CompletableFuture
 
-@Client("https://api.themoviedb.org")
+@Client("the-movie-database")
 interface MovieDatabaseClient {
 
     @Get("/3/movie/top_rated")

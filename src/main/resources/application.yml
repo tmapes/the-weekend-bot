@@ -4,9 +4,11 @@ micronaut:
   server:
     thread-selection: auto
   http:
-    client:
-      pool:
-        enabled: true
+    services:
+      the-movie-database:
+        url: "https://api.themoviedb.org"
+        pool:
+          enabled: false
   health:
     monitor:
       enabled: false

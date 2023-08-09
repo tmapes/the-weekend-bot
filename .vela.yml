@@ -3,41 +3,28 @@ version: "1"
 steps:
 
   - name: build
-    image: docker.mapes.info/eclipse-temurin:11.0.13_8-jdk-alpine
+    image: eclipse-temurin:11.0.13_8-jdk-alpine
     pull: not_present
-    environment:
-      GRADLE_USER_HOME: .gradle
-      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.parallel=false
     commands:
       - ./gradlew clean build buildLayers
 
   - name: build image dry run
-    image: target/vela-kaniko:v0.7.1
-    environment:
-      - container=docker
+    image: target/vela-kaniko:v0.13.0
     parameters:
       dry_run: true
-      repo: docker.internal.mapes.info/the-weekend-bot
+      repo: index.docker.io/tjmapes/the-weekend-bot
+      mirror: docker.mapes.info
       tags:
         - dry_run
     ruleset:
-      event: [pull_request]
-      branch: [main]
+      event: [ pull_request ]
+      branch: [ main ]
 
   - name: build tag image
-    image: target/vela-kaniko:v0.7.1
-    environment:
-      - container=docker
-    secrets:
-      - source: docker_username
-        target: parameter_username
-      - source: docker_password
-        target: parameter_password
+    image: target/vela-kaniko:v0.13.0
+    secrets: [ docker_username, docker_password ]
     parameters:
-      insecure_registries:
-        - docker.internal.mapes.info
-      registry: docker.internal.mapes.info
-      repo: docker.internal.mapes.info/the-weekend-bot
+      repo: index.docker.io/tjmapes/the-weekend-bot
       mirror: docker.mapes.info
       tags:
         - "b${VELA_BUILD_NUMBER}-${VELA_BUILD_COMMIT:0:8}"
@@ -46,19 +33,10 @@ steps:
       branch: main
 
   - name: build tag image
-    image: target/vela-kaniko:v0.7.1
-    environment:
-      - container=docker
-    secrets:
-      - source: docker_username
-        target: parameter_username
-      - source: docker_password
-        target: parameter_password
+    image: target/vela-kaniko:v0.13.0
+    secrets: [ docker_username, docker_password ]
     parameters:
-      insecure_registries:
-        - docker.internal.mapes.info
-      registry: docker.internal.mapes.info
-      repo: docker.internal.mapes.info/the-weekend-bot
+      repo: index.docker.io/tjmapes/the-weekend-bot
       mirror: docker.mapes.info
       tags:
         - "${VELA_BUILD_TAG:##v}"
@@ -69,6 +47,8 @@ secrets:
   - name: docker_username
     type: org
     key: tmapes/docker_username
+    engine: native
   - name: docker_password
     type: org
     key: tmapes/docker_password
+    engine: native
