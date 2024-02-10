@@ -17,6 +17,9 @@ class MovieFetchService(
         val page = (0..maxPage).random()
         val discoveredMovies = movieDatabaseClient.topRatedMovies(page = page)
 
+        if (maxPage != discoveredMovies.totalPages) {
+            logger.info("Max TMDB page updated to ${discoveredMovies.totalPages}")
+        }
         maxPage = discoveredMovies.totalPages // update maxPage to the page returned by TMDB
         if (discoveredMovies.results.isEmpty()) {
             logger.error("Null/Empty Body from TMDB, body: '$discoveredMovies'")
