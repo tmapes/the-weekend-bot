@@ -1,0 +1,13 @@
+### Get a single movie
+# @no-log
+# @no-cookie-jar
+GET https://api.themoviedb.org/3/movie/50270?append_to_response=credits,images
+Authorization: Bearer {{tmdb_token}}
+Connection: close
+
+### Get top rated movies
+# @no-cookie-jar
+# @no-log
+GET https://api.themoviedb.org/3/movie/top_rated?language=en-US&region=US&page=500
+Authorization: Bearer {{tmdb_token}}
+Connection: close
