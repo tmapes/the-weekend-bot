@@ -1,5 +1,9 @@
 version: "1"
 
+metadata:
+  auto_cancel:
+    running: true
+
 steps:
 
   - name: build
