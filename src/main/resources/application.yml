@@ -24,6 +24,9 @@ mongodb:
   database-name: movies
   collection-name: movies
 
+tmdb:
+  api-token: "token-here"
+
 discord:
   token: "my-cool-token"
   raw-bot-id: 123124123

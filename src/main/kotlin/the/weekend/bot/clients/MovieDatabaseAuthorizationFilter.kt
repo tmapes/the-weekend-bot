@@ -10,9 +10,9 @@ import org.reactivestreams.Publisher
 
 @Filter(serviceId = ["the-movie-database"])
 class MovieDatabaseAuthorizationFilter(
-    @Value("\${tmdb.api-key}") private val tmdbApiKey: String,
+    @Value("\${tmdb.api-token}") private val tmdbApiToken: String,
 ) : HttpClientFilter {
 
     override fun doFilter(request: MutableHttpRequest<*>, chain: ClientFilterChain): Publisher<out HttpResponse<*>> =
-        chain.proceed(request.bearerAuth(tmdbApiKey))
+        chain.proceed(request.bearerAuth(tmdbApiToken))
 }
