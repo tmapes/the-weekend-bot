@@ -45,14 +45,8 @@ class MovieWatchingService(
         }
 
         try {
-            val newMovie = movieFetchService.getNextMovie()
-            newMovie?.let {
-                val existingMovie = movieWatchingRepository.getMovieByNameAndYear(it.title, it.year)
-                if (existingMovie != null) {
-                    logger.info("Already watched $existingMovie")
-                    return null
-                }
-                currentMovie = newMovie
+            movieFetchService.getNextMovie()?.let {
+                currentMovie = it
                 logger.info("Starting: $currentMovie")
                 val success = movieWatchingRepository.saveMovie(it.toMovieEntity(null))
                 if (success) {
@@ -62,7 +56,7 @@ class MovieWatchingService(
                 return null
             }
             currentMovie = null
-            return currentMovie
+            return null
         } catch (ex: Exception) {
             logger.error("Failed to retrieve a new movie to watch.", ex)
             currentMovie = null

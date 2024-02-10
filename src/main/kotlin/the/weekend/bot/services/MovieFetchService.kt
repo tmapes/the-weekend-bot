@@ -4,11 +4,13 @@ import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
 import the.weekend.bot.clients.MovieDatabaseClient
 import the.weekend.bot.domains.Movie
+import the.weekend.bot.repositories.MovieWatchingRepository
 import java.time.LocalDate
 
 @Singleton
 class MovieFetchService(
-    private val movieDatabaseClient: MovieDatabaseClient
+    private val movieDatabaseClient: MovieDatabaseClient,
+    private val movieWatchingRepository: MovieWatchingRepository,
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
     private var maxPage: Int = 500 // Start at 500 and dynamically change based on TMDB responses.
@@ -26,13 +28,10 @@ class MovieFetchService(
             return null
         }
 
-        val discoveredMovie = run {
-            var shouldWatch = discoveredMovies.results.random()
-            while (shouldWatch.releaseDate.isBefore(EARLIEST_MOVIE_RELEASE)) {
-                shouldWatch = discoveredMovies.results.random()
-            }
-            shouldWatch
-        }
+        val discoveredMovie = discoveredMovies.results.firstOrNull {
+            it.releaseDate.isAfter(EARLIEST_MOVIE_RELEASE) &&
+                movieWatchingRepository.getMovieByNameAndYear(it.title, it.releaseDate.year) == null
+        } ?: return null
 
         try {
             val nextMovie =

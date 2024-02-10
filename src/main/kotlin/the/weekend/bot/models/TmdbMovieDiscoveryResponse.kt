@@ -15,7 +15,8 @@ data class TmdbMovieDiscoveryResponse(
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class TmdbDiscoveredMovie(
     val id: Int,
-    @JsonFormat(pattern = "yyyy-MM-dd") val releaseDate: LocalDate
+    @JsonFormat(pattern = "yyyy-MM-dd") val releaseDate: LocalDate,
+    val title: String,
 )
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
