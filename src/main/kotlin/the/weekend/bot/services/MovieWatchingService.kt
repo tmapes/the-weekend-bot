@@ -48,7 +48,7 @@ class MovieWatchingService(
             newMovie?.let {
                 val existingMovie = movieWatchingRepository.getMovieByNameAndYear(it.title, it.year)
                 if (existingMovie != null) {
-                    logger.info("Already watched $it")
+                    logger.info("Already watched $existingMovie")
                     return null
                 }
                 currentMovie = newMovie
