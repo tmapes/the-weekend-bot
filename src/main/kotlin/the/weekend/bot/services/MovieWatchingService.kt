@@ -3,6 +3,7 @@ package the.weekend.bot.services
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
 import jakarta.inject.Singleton
+import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import the.weekend.bot.domains.Movie
@@ -21,7 +22,7 @@ class MovieWatchingService(
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
     private var currentMovie: Movie? = null
 
-    override fun onApplicationEvent(ignored: ServerStartupEvent) {
+    override fun onApplicationEvent(ignored: ServerStartupEvent) = runBlocking {
         movieWatchingRepository.getCurrentlyWatchingMovie().letOrElse(
             nonNull = {
                 currentMovie = it.toMovie()

@@ -2,7 +2,6 @@ package the.weekend.bot.utils
 
 import discord4j.core.event.domain.message.MessageCreateEvent
 import io.micronaut.core.util.StringUtils
-import the.weekend.bot.entities.MovieWatchingEntity
 import the.weekend.bot.utils.Constants.WATCHED_PATTERN
 
 inline fun <T, R> T?.letOrElse(nonNull: (T) -> R, ifNull: () -> Unit) {
@@ -16,14 +15,4 @@ fun MessageCreateEvent.getWatchedQuery(): String {
     }
 
     return StringUtils.EMPTY_STRING
-}
-
-fun Sequence<MovieWatchingEntity>.getMessage(): String {
-
-    val sb = StringBuilder()
-    this.forEach {
-        sb.append("**${it.name}** (${it.year})\n")
-    }
-
-    return sb.toString()
 }

@@ -1,29 +1,29 @@
 package the.weekend.bot.changelogs
 
-import com.mongodb.client.MongoClient
-import com.mongodb.client.MongoCollection
-import com.mongodb.client.MongoDatabase
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
-import io.mongock.driver.mongodb.sync.v4.driver.MongoSync4Driver
+import io.mongock.driver.mongodb.reactive.driver.MongoReactiveDriver
 import io.mongock.runner.standalone.MongockStandalone
 import jakarta.inject.Singleton
+import org.litote.kmongo.coroutine.CoroutineClient
+import org.litote.kmongo.coroutine.CoroutineCollection
+import org.litote.kmongo.coroutine.CoroutineDatabase
 import the.weekend.bot.configs.MongoConfiguration
 import the.weekend.bot.entities.MovieWatchingEntity
 
 @Singleton
 class ChangelogRunner(
     private val mongoConfiguration: MongoConfiguration,
-    private val mongoClient: MongoClient,
-    private val mongoDatabase: MongoDatabase,
-    private val movieCollection: MongoCollection<MovieWatchingEntity>
+    private val mongoClient: CoroutineClient,
+    private val mongoDatabase: CoroutineDatabase,
+    private val movieCollection: CoroutineCollection<MovieWatchingEntity>
 ) : ApplicationEventListener<ServerStartupEvent> {
 
     override fun onApplicationEvent(event: ServerStartupEvent) {
         val mongockRunner = MongockStandalone.builder()
             .setDriver(
-                MongoSync4Driver.withDefaultLock(
-                    mongoClient,
+                MongoReactiveDriver.withDefaultLock(
+                    mongoClient.client,
                     mongoConfiguration.databaseName
                 )
             )
@@ -31,7 +31,7 @@ class ChangelogRunner(
             .addDependency("mongoConfiguration", mongoConfiguration)
             .addDependency("mongoDatabase", mongoDatabase)
             .addDependency("movieCollection", movieCollection)
-            .setTransactionEnabled(false)
+            .setTransactionEnabled(true)
             .buildRunner()
 
         mongockRunner.execute()

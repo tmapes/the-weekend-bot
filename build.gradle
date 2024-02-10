@@ -41,9 +41,9 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("com.discord4j:discord4j-core:$discord4jVersion")
-    implementation("org.litote.kmongo:kmongo:$kmongoVersion")
+    implementation("org.litote.kmongo:kmongo-coroutine:$kmongoVersion")
     implementation("io.mongock:mongock-standalone:$mongockVersion")
-    implementation("io.mongock:mongodb-sync-v4-driver:$mongockVersion")
+    implementation("io.mongock:mongodb-reactive-driver:$mongockVersion")
 
     kaptTest("io.micronaut:micronaut-inject-java")
     testImplementation("org.codehaus.groovy:groovy-all:${groovyVersion}")

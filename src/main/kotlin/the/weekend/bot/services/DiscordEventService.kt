@@ -2,11 +2,11 @@ package the.weekend.bot.services
 
 import discord4j.common.util.Snowflake
 import discord4j.core.DiscordClient
-import discord4j.core.`object`.presence.ClientActivity
-import discord4j.core.`object`.presence.ClientPresence.online
 import discord4j.core.event.domain.lifecycle.DisconnectEvent
 import discord4j.core.event.domain.lifecycle.ReadyEvent
 import discord4j.core.event.domain.message.MessageCreateEvent
+import discord4j.core.`object`.presence.ClientActivity
+import discord4j.core.`object`.presence.ClientPresence.online
 import discord4j.discordjson.json.EmbedData
 import discord4j.discordjson.json.MessageCreateRequest
 import io.micronaut.context.annotation.Context
@@ -16,7 +16,6 @@ import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import the.weekend.bot.configs.DiscordClientConfiguration
 import the.weekend.bot.repositories.MovieWatchingRepository
-import the.weekend.bot.utils.getMessage
 import the.weekend.bot.utils.getWatchedQuery
 
 @Context
@@ -106,19 +105,25 @@ class DiscordEventService(
         logger.info("Disconnected from Discord! '$event'")
     }
 
-    protected fun attemptWatchSearch(event: MessageCreateEvent): Boolean {
+    protected suspend fun attemptWatchSearch(event: MessageCreateEvent): Boolean {
         val watchQuery = event.getWatchedQuery()
         if (watchQuery.isNotEmpty()) {
             logger.info("Searching for watched movies that match '$watchQuery'")
-            with(movieWatchingRepository.searchForWatchedMovie(watchQuery)) {
-                val movieCount = this.count()
-                logger.info("Searching for '$watchQuery' matched $movieCount movies")
-                if (movieCount <= 0) {
-                    sendMessage("No movies watched matching '$watchQuery'", event.message.channelId)
-                    return true
+
+            var movieCount = 0
+            val sb = StringBuilder()
+            movieWatchingRepository.searchForWatchedMovie(watchQuery)
+                .collect {
+                    movieCount++
+                    sb.append("**${it.name}** (${it.year})\n")
                 }
-                sendMessage(this.getMessage(), event.message.channelId)
+
+            logger.info("Searching for '$watchQuery' matched $movieCount movies")
+            if (movieCount <= 0) {
+                sendMessage("No movies watched matching '$watchQuery'", event.message.channelId)
+                return true
             }
+            sendMessage(sb.toString(), event.message.channelId)
             return true
         }
         return false

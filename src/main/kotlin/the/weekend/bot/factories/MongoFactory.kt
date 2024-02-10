@@ -1,11 +1,12 @@
 package the.weekend.bot.factories
 
-import com.mongodb.client.MongoClient
-import com.mongodb.client.MongoCollection
-import com.mongodb.client.MongoDatabase
 import io.micronaut.context.annotation.Factory
 import jakarta.inject.Singleton
-import org.litote.kmongo.KMongo
+import org.litote.kmongo.coroutine.CoroutineClient
+import org.litote.kmongo.coroutine.CoroutineCollection
+import org.litote.kmongo.coroutine.CoroutineDatabase
+import org.litote.kmongo.coroutine.coroutine
+import org.litote.kmongo.reactivestreams.KMongo
 import the.weekend.bot.configs.MongoConfiguration
 import the.weekend.bot.entities.MovieWatchingEntity
 
@@ -13,20 +14,20 @@ import the.weekend.bot.entities.MovieWatchingEntity
 class MongoFactory {
 
     @Singleton
-    fun mongoClient(mongoConfiguration: MongoConfiguration): MongoClient {
-        return KMongo.createClient(mongoConfiguration.uri)
+    fun mongoClient(mongoConfiguration: MongoConfiguration): CoroutineClient {
+        return KMongo.createClient(mongoConfiguration.uri).coroutine
     }
 
     @Singleton
-    fun mongoDatabase(mongoConfiguration: MongoConfiguration, mongoClient: MongoClient): MongoDatabase {
+    fun mongoDatabase(mongoConfiguration: MongoConfiguration, mongoClient: CoroutineClient): CoroutineDatabase {
         return mongoClient.getDatabase(mongoConfiguration.databaseName)
     }
 
     @Singleton
     fun movieCollection(
         mongoConfiguration: MongoConfiguration,
-        mongoDatabase: MongoDatabase
-    ): MongoCollection<MovieWatchingEntity> {
-        return mongoDatabase.getCollection(mongoConfiguration.collectionName, MovieWatchingEntity::class.java)
+        mongoDatabase: CoroutineDatabase
+    ): CoroutineCollection<MovieWatchingEntity> {
+        return mongoDatabase.getCollection<MovieWatchingEntity>(mongoConfiguration.collectionName)
     }
 }
