@@ -13,7 +13,7 @@ class MongoFactorySpec extends Specification {
 
     private def mongoClientMock = Mock(CoroutineClient)
     private def mongoDatabaseMock = Mock(CoroutineDatabase)
-    private def mongoCollectionMock = Mock(CoroutineDatabase)
+    private def mongoCollectionMock = Mock(CoroutineCollection)
     private def mongoConfigurationMock = GroovyMock(MongoConfiguration)
 
     private static def MONGO_URI = "mongodb://127.0.1.1/database"
