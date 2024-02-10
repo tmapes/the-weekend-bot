@@ -8,7 +8,8 @@ import java.time.LocalDate
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class TmdbMovieDiscoveryResponse(
-    val results: List<TmdbDiscoveredMovie>
+    val results: List<TmdbDiscoveredMovie>,
+    val totalPages: Int
 )
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
@@ -41,7 +42,7 @@ data class TmdbCredit(
     val name: String,
     val job: String
 ) {
-    fun isDirector() = "DIRECTOR" == job.uppercase()
+    val director = "DIRECTOR" == job.uppercase()
 }
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)

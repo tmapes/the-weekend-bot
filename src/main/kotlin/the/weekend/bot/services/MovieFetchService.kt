@@ -1,9 +1,6 @@
 package the.weekend.bot.services
 
-import io.micronaut.context.annotation.Value
-import io.micronaut.http.HttpStatus
 import jakarta.inject.Singleton
-import kotlinx.coroutines.future.await
 import org.slf4j.LoggerFactory
 import the.weekend.bot.clients.MovieDatabaseClient
 import the.weekend.bot.domains.Movie
@@ -11,33 +8,32 @@ import java.time.LocalDate
 
 @Singleton
 class MovieFetchService(
-    @Value("\${tmdb.api-key}") private val tmdbApiKey: String,
     private val movieDatabaseClient: MovieDatabaseClient
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
+    private var maxPage: Int = 500 // Start at 500 and dynamically change based on TMDB responses.
 
     suspend fun getNextMovie(): Movie? {
-        val page = (0..499).random()
-        val discoveredMovies = movieDatabaseClient.topRatedMovies(apiKey = tmdbApiKey, page = page).await()
+        val page = (0..maxPage).random()
+        val discoveredMovies = movieDatabaseClient.topRatedMovies(page = page)
 
-        if (discoveredMovies.status != HttpStatus.OK) {
-            logger.warn("Non OK status from TMDB: ${discoveredMovies.status}")
-        }
-        val body = discoveredMovies.body()
-        if (body == null || body.results.isEmpty()) {
-            logger.error("Null/Empty Body from TMDB : Status: '${discoveredMovies.status}' and body: $body")
+        maxPage = discoveredMovies.totalPages // update maxPage to the page returned by TMDB
+        if (discoveredMovies.results.isEmpty()) {
+            logger.error("Null/Empty Body from TMDB, body: '$discoveredMovies'")
             return null
         }
+
         val discoveredMovie = run {
-            var shouldWatch = body.results.random()
+            var shouldWatch = discoveredMovies.results.random()
             while (shouldWatch.releaseDate.isBefore(EARLIEST_MOVIE_RELEASE)) {
-                shouldWatch = body.results.random()
+                shouldWatch = discoveredMovies.results.random()
             }
             shouldWatch
         }
+
         try {
             val nextMovie =
-                movieDatabaseClient.getMovieById(movieId = discoveredMovie.id, appendToResponse = emptySet(), apiKey = tmdbApiKey).await().body()
+                movieDatabaseClient.getMovieById(discoveredMovie.id, appendToResponse = emptySet()).body()
                     ?: run {
                         logger.error("Failed to get data for $discoveredMovie when performing lookup...")
                         return null

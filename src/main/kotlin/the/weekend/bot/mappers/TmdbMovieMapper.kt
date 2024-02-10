@@ -4,6 +4,7 @@ import discord4j.discordjson.json.EmbedData
 import discord4j.discordjson.json.EmbedFieldData
 import discord4j.discordjson.json.EmbedImageData
 import the.weekend.bot.domains.Movie
+import the.weekend.bot.models.TmdbCredit
 import the.weekend.bot.models.TmdbMovie
 import java.text.NumberFormat
 import java.util.Currency
@@ -34,7 +35,7 @@ class TmdbMovieMapper {
             if (tmdbMovie == null)
                 return embedDataBuilder.build()
 
-            tmdbMovie.credits?.crew?.firstOrNull { it.isDirector() }?.let {
+            tmdbMovie.credits?.crew?.firstOrNull(TmdbCredit::director)?.let {
                 embedDataBuilder.addField(EmbedFieldData.builder().name("Directed by").value(it.name).build())
             }
 
