@@ -40,7 +40,6 @@ dependencies {
     implementation("io.micronaut:micronaut-validation")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
     implementation("com.discord4j:discord4j-core:$discord4jVersion")
     implementation("org.litote.kmongo:kmongo:$kmongoVersion")
     implementation("io.mongock:mongock-standalone:$mongockVersion")
