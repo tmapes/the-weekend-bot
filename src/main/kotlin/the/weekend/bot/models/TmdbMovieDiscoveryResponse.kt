@@ -42,7 +42,7 @@ data class TmdbCredit(
     val name: String,
     val job: String
 ) {
-    val director= "DIRECTOR" == job.uppercase()
+    val director = "DIRECTOR" == job.uppercase()
 }
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
