@@ -24,7 +24,7 @@ steps:
       event: [ pull_request ]
       branch: [ main ]
 
-  - name: build tag image
+  - name: build snapshot image
     image: target/vela-kaniko:v0.13.0
     secrets: [ docker_username, docker_password ]
     parameters:
