@@ -2,11 +2,12 @@ package the.weekend.bot.services
 
 import discord4j.common.util.Snowflake
 import discord4j.core.DiscordClient
-import discord4j.core.`object`.presence.ClientActivity
-import discord4j.core.`object`.presence.ClientPresence.online
+import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.lifecycle.DisconnectEvent
 import discord4j.core.event.domain.lifecycle.ReadyEvent
 import discord4j.core.event.domain.message.MessageCreateEvent
+import discord4j.core.`object`.presence.ClientActivity
+import discord4j.core.`object`.presence.ClientPresence.online
 import discord4j.discordjson.json.EmbedData
 import discord4j.discordjson.json.MessageCreateRequest
 import io.micronaut.context.annotation.Context
@@ -14,6 +15,7 @@ import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
+import reactor.core.scheduler.Schedulers
 import the.weekend.bot.configs.DiscordClientConfiguration
 import the.weekend.bot.repositories.MovieWatchingRepository
 import the.weekend.bot.utils.getWatchedQuery
@@ -26,16 +28,19 @@ class DiscordEventService(
 
     private val logger = LoggerFactory.getLogger(this::class.java)
     private val rootClient = DiscordClient.create(discordClientConfiguration.token)
-    private val client = rootClient.gateway().login().block()!!
+    private lateinit var client: GatewayDiscordClient
     private val botId = discordClientConfiguration.botId
 
     @PostConstruct
     fun handleStartup() {
         logger.info("Discord Client Created with configured Channels : ${discordClientConfiguration.channels}")
 
-        client.on(ReadyEvent::class.java).subscribe(::handleReady)
-        client.on(DisconnectEvent::class.java).subscribe(::handleDisconnect)
-        client.on(MessageCreateEvent::class.java).subscribe(::handleMessage)
+        rootClient.gateway().login().subscribeOn(Schedulers.boundedElastic()).subscribe {
+            client = it
+            it.on(ReadyEvent::class.java).subscribeOn(Schedulers.boundedElastic()).subscribe(::handleReady)
+            it.on(DisconnectEvent::class.java).subscribeOn(Schedulers.boundedElastic()).subscribe(::handleDisconnect)
+            it.on(MessageCreateEvent::class.java).subscribeOn(Schedulers.boundedElastic()).subscribe(::handleMessage)
+        }
     }
 
     @PreDestroy
