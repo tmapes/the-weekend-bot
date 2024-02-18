@@ -16,7 +16,7 @@ class MovieFetchService(
     private var maxPage: Int = 500 // Start at 500 and dynamically change based on TMDB responses.
 
     suspend fun getNextMovie(): Movie? {
-        val page = (0..maxPage).random()
+        val page = (1..maxPage).random()
         val discoveredMovies = movieDatabaseClient.topRatedMovies(page = page)
 
         if (maxPage != discoveredMovies.totalPages) {
