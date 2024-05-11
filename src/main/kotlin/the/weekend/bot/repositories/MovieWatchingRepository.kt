@@ -27,20 +27,16 @@ class MovieWatchingRepository(
         )
     }
 
-    suspend fun getMovieByNameAndYear(name: String, year: Int): MovieWatchingEntity? {
+    suspend fun getMovieByTmdbId(tmdbId: Int): MovieWatchingEntity? {
         return movieCollection.findOne(
-            and(
-                MovieWatchingEntity::name eq name,
-                MovieWatchingEntity::year eq year
-            )
+            MovieWatchingEntity::tmdbId eq tmdbId
         )
     }
 
     suspend fun saveMovie(movie: MovieWatchingEntity): Boolean {
         return movieCollection.replaceOne(
             and(
-                MovieWatchingEntity::name eq movie.name,
-                MovieWatchingEntity::year eq movie.year
+                MovieWatchingEntity::tmdbId eq movie.tmdbId
             ),
             movie, ReplaceOptions().upsert(true)
         ).wasAcknowledged()
