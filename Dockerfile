@@ -1,4 +1,4 @@
-FROM docker.mapes.info/eclipse-temurin:17.0.8_7-jre-alpine
+FROM docker.mapes.info/eclipse-temurin:17.0.11_9-jre-alpine
 
 ENV TZ="UTC"
 
