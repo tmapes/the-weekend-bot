@@ -9,19 +9,21 @@ import jakarta.inject.Singleton
 @Singleton
 @Context
 @ConfigurationProperties("discord")
-data class DiscordClientConfiguration @ConfigurationInject constructor(
-    val token: String,
-    val rawBotId: Long,
-    val schedule: String,
-    val channels: Set<ChannelConfiguration>
-) {
-    val botId: Snowflake = Snowflake.of(rawBotId)
-}
+data class DiscordClientConfiguration
+    @ConfigurationInject
+    constructor(
+        val token: String,
+        val rawBotId: Long,
+        val schedule: String,
+        val channels: Set<ChannelConfiguration>,
+    ) {
+        val botId: Snowflake = Snowflake.of(rawBotId)
+    }
 
 data class ChannelConfiguration(
     val name: String,
     val rawId: Long,
-    val enabled: Boolean
+    val enabled: Boolean,
 ) {
     val id: Snowflake = Snowflake.of(rawId)
 }

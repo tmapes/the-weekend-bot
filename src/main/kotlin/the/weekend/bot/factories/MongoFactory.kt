@@ -12,21 +12,23 @@ import the.weekend.bot.entities.MovieWatchingEntity
 
 @Factory
 class MongoFactory {
-
     @Singleton
     fun mongoClient(mongoConfiguration: MongoConfiguration): CoroutineClient {
         return KMongo.createClient(mongoConfiguration.uri).coroutine
     }
 
     @Singleton
-    fun mongoDatabase(mongoConfiguration: MongoConfiguration, mongoClient: CoroutineClient): CoroutineDatabase {
+    fun mongoDatabase(
+        mongoConfiguration: MongoConfiguration,
+        mongoClient: CoroutineClient,
+    ): CoroutineDatabase {
         return mongoClient.getDatabase(mongoConfiguration.databaseName)
     }
 
     @Singleton
     fun movieCollection(
         mongoConfiguration: MongoConfiguration,
-        mongoDatabase: CoroutineDatabase
+        mongoDatabase: CoroutineDatabase,
     ): CoroutineCollection<MovieWatchingEntity> {
         return mongoDatabase.getCollection<MovieWatchingEntity>(mongoConfiguration.collectionName)
     }

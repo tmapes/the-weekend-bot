@@ -16,21 +16,21 @@ import java.time.Instant
 class MovieWatchingService(
     private val movieFetchService: MovieFetchService,
     private val moviePostingService: MoviePostingService,
-    private val movieWatchingRepository: MovieWatchingRepository
+    private val movieWatchingRepository: MovieWatchingRepository,
 ) : ApplicationEventListener<ServerStartupEvent> {
-
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
     private var currentMovie: Movie? = null
 
-    override fun onApplicationEvent(ignored: ServerStartupEvent) = runBlocking {
-        movieWatchingRepository.getCurrentlyWatchingMovie().letOrElse(
-            nonNull = {
-                currentMovie = it.toMovie()
-                logger.info("Resuming Previous Movie: $it")
-            },
-            ifNull = { logger.info("Found no movie to resume.") }
-        )
-    }
+    override fun onApplicationEvent(ignored: ServerStartupEvent) =
+        runBlocking {
+            movieWatchingRepository.getCurrentlyWatchingMovie().letOrElse(
+                nonNull = {
+                    currentMovie = it.toMovie()
+                    logger.info("Resuming Previous Movie: $it")
+                },
+                ifNull = { logger.info("Found no movie to resume.") },
+            )
+        }
 
     suspend fun getOrStartMovie(force: Boolean = false): Movie? {
         currentMovie?.let {

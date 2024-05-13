@@ -12,33 +12,33 @@ import the.weekend.bot.entities.MovieWatchingEntity
 
 @Singleton
 class MovieWatchingRepository(
-    private val movieCollection: CoroutineCollection<MovieWatchingEntity>
+    private val movieCollection: CoroutineCollection<MovieWatchingEntity>,
 ) {
-
     suspend fun getCountOfWatchedMovies(): Long {
         return movieCollection.countDocuments(
-            MovieWatchingEntity::finished ne null
+            MovieWatchingEntity::finished ne null,
         )
     }
 
     suspend fun getCurrentlyWatchingMovie(): MovieWatchingEntity? {
         return movieCollection.findOne(
-            MovieWatchingEntity::finished eq null
+            MovieWatchingEntity::finished eq null,
         )
     }
 
     suspend fun getMovieByTmdbId(tmdbId: Int): MovieWatchingEntity? {
         return movieCollection.findOne(
-            MovieWatchingEntity::tmdbId eq tmdbId
+            MovieWatchingEntity::tmdbId eq tmdbId,
         )
     }
 
     suspend fun saveMovie(movie: MovieWatchingEntity): Boolean {
         return movieCollection.replaceOne(
             and(
-                MovieWatchingEntity::tmdbId eq movie.tmdbId
+                MovieWatchingEntity::tmdbId eq movie.tmdbId,
             ),
-            movie, ReplaceOptions().upsert(true)
+            movie,
+            ReplaceOptions().upsert(true),
         ).wasAcknowledged()
     }
 

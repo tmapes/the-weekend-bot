@@ -10,7 +10,7 @@ data class MovieWatchingEntity(
     val length: Long,
     val tmdbId: Int,
     val started: Instant,
-    val finished: Instant?
+    val finished: Instant?,
 ) {
     fun toMovie(): Movie {
         return Movie(
@@ -18,7 +18,7 @@ data class MovieWatchingEntity(
             year = year,
             length = Duration.ofMinutes(length),
             started = started,
-            tmdbId = tmdbId
+            tmdbId = tmdbId,
         )
     }
 

@@ -10,30 +10,34 @@ import java.text.NumberFormat
 import java.util.Currency
 
 class TmdbMovieMapper {
-
     companion object {
         private const val GREEN: Int = 1234567
-        private val CURRENCY_FORMAT = NumberFormat.getCurrencyInstance().apply {
-            maximumFractionDigits = 0
-            currency = Currency.getInstance("USD")
-        }
+        private val CURRENCY_FORMAT =
+            NumberFormat.getCurrencyInstance().apply {
+                maximumFractionDigits = 0
+                currency = Currency.getInstance("USD")
+            }
 
         @JvmStatic
-        fun toEmbedData(movie: Movie, tmdbMovie: TmdbMovie?): EmbedData {
+        fun toEmbedData(
+            movie: Movie,
+            tmdbMovie: TmdbMovie?,
+        ): EmbedData {
+            val embedDataBuilder =
+                EmbedData.builder()
+                    .title(movie.title)
+                    .url("https://www.themoviedb.org/movie/${movie.tmdbId}")
+                    .color(GREEN)
+                    .addField(
+                        EmbedFieldData.builder()
+                            .name("Released")
+                            .value(movie.year.toString())
+                            .build(),
+                    )
 
-            val embedDataBuilder = EmbedData.builder()
-                .title(movie.title)
-                .url("https://www.themoviedb.org/movie/${movie.tmdbId}")
-                .color(GREEN)
-                .addField(
-                    EmbedFieldData.builder()
-                        .name("Released")
-                        .value(movie.year.toString())
-                        .build()
-                )
-
-            if (tmdbMovie == null)
+            if (tmdbMovie == null) {
                 return embedDataBuilder.build()
+            }
 
             tmdbMovie.credits?.crew?.firstOrNull(TmdbCredit::director)?.let {
                 embedDataBuilder.addField(EmbedFieldData.builder().name("Directed by").value(it.name).build())
@@ -44,30 +48,33 @@ class TmdbMovieMapper {
             }
 
             tmdbMovie.revenue?.let {
-                if (it > 0)
+                if (it > 0) {
                     embedDataBuilder.addField(
                         EmbedFieldData.builder().name("Box Office").value(CURRENCY_FORMAT.format(tmdbMovie.revenue))
-                            .build()
+                            .build(),
                     )
+                }
             }
 
             tmdbMovie.budget?.let {
-                if (it > 0)
+                if (it > 0) {
                     embedDataBuilder.addField(
-                        EmbedFieldData.builder().name("Budget").value(CURRENCY_FORMAT.format(tmdbMovie.budget)).build()
+                        EmbedFieldData.builder().name("Budget").value(CURRENCY_FORMAT.format(tmdbMovie.budget)).build(),
                     )
+                }
             }
 
             if (tmdbMovie.images?.posters != null) {
-                val image = tmdbMovie.images.posters.firstOrNull { it.isoCode == "en" }
-                    ?: tmdbMovie.images.posters.firstOrNull()
+                val image =
+                    tmdbMovie.images.posters.firstOrNull { it.isoCode == "en" }
+                        ?: tmdbMovie.images.posters.firstOrNull()
 
                 image?.let {
                     val url = "https://www.themoviedb.org/t/p/w1280/${it.filePath}"
                     embedDataBuilder.image(
                         EmbedImageData.builder()
                             .url(url)
-                            .build()
+                            .build(),
                     )
                 }
             }

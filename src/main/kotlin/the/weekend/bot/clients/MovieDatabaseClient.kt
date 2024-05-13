@@ -10,7 +10,6 @@ import the.weekend.bot.models.TmdbMovieDiscoveryResponse
 
 @Client("the-movie-database")
 interface MovieDatabaseClient {
-
     @Get("/3/movie/top_rated")
     suspend fun topRatedMovies(
         @QueryValue("page") page: Int,

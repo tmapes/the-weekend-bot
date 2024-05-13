@@ -4,7 +4,10 @@ import discord4j.core.event.domain.message.MessageCreateEvent
 import io.micronaut.core.util.StringUtils
 import the.weekend.bot.utils.Constants.WATCHED_PATTERN
 
-inline fun <T, R> T?.letOrElse(nonNull: (T) -> R, ifNull: () -> Unit) {
+inline fun <T, R> T?.letOrElse(
+    nonNull: (T) -> R,
+    ifNull: () -> Unit,
+) {
     if (this != null) nonNull(this) else ifNull()
 }
 

@@ -49,7 +49,12 @@ data class Movie(
 
     fun toMovieEntity(finished: Instant?): MovieWatchingEntity {
         return MovieWatchingEntity(
-            name = title, year = year, length = length.toMinutes(), tmdbId = tmdbId, started = started, finished = finished
+            name = title,
+            year = year,
+            length = length.toMinutes(),
+            tmdbId = tmdbId,
+            started = started,
+            finished = finished,
         )
     }
 
@@ -58,6 +63,6 @@ data class Movie(
         year = movie.releaseDate.year,
         length = Duration.ofMinutes(movie.runtime),
         started = Instant.now(Clock.systemUTC()),
-        tmdbId = movie.id
+        tmdbId = movie.id,
     )
 }

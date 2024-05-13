@@ -3,11 +3,11 @@ package the.weekend.bot.services
 import discord4j.common.util.Snowflake
 import discord4j.core.DiscordClient
 import discord4j.core.GatewayDiscordClient
-import discord4j.core.`object`.presence.ClientActivity
-import discord4j.core.`object`.presence.ClientPresence.online
 import discord4j.core.event.domain.lifecycle.DisconnectEvent
 import discord4j.core.event.domain.lifecycle.ReadyEvent
 import discord4j.core.event.domain.message.MessageCreateEvent
+import discord4j.core.`object`.presence.ClientActivity
+import discord4j.core.`object`.presence.ClientPresence.online
 import discord4j.discordjson.json.EmbedData
 import discord4j.discordjson.json.MessageCreateRequest
 import io.micronaut.context.annotation.Context
@@ -23,9 +23,8 @@ import the.weekend.bot.utils.getWatchedQuery
 @Context
 class DiscordEventService(
     private val discordClientConfiguration: DiscordClientConfiguration,
-    private val movieWatchingRepository: MovieWatchingRepository
+    private val movieWatchingRepository: MovieWatchingRepository,
 ) {
-
     private val logger = LoggerFactory.getLogger(this::class.java)
     private val rootClient = DiscordClient.create(discordClientConfiguration.token)
     private lateinit var client: GatewayDiscordClient
@@ -59,11 +58,18 @@ class DiscordEventService(
             }
     }
 
-    fun sendMessage(message: String, channelId: Snowflake) {
+    fun sendMessage(
+        message: String,
+        channelId: Snowflake,
+    ) {
         client.rest().getChannelById(channelId).createMessage(message).block()
     }
 
-    fun sendEmbedMessage(message: String, embedData: EmbedData, channelId: Long) {
+    fun sendEmbedMessage(
+        message: String,
+        embedData: EmbedData,
+        channelId: Long,
+    ) {
         val messageCreateRequest = MessageCreateRequest.builder().content(message).embed(embedData).build()
         val channelSnowflake = Snowflake.of(channelId)
         client.rest().getChannelById(channelSnowflake).createMessage(messageCreateRequest).block()
@@ -71,39 +77,41 @@ class DiscordEventService(
 
     fun setStatus(movieText: String) {
         client.updatePresence(
-            online(ClientActivity.watching(movieText))
+            online(ClientActivity.watching(movieText)),
         ).block()
     }
 
     // !count
     // !watched <search query>
-    private fun handleMessage(event: MessageCreateEvent): Unit = runBlocking {
-
-        if (event.member.isPresent && event.member.get().id == botId)
-            return@runBlocking
-        else if (!event.message.userMentionIds.contains(botId))
-            return@runBlocking
-
-        if (event.message.content.endsWith("!count")) {
-            with(movieWatchingRepository.getCountOfWatchedMovies()) {
-                sendMessage("$this movies finished", event.message.channelId)
+    private fun handleMessage(event: MessageCreateEvent): Unit =
+        runBlocking {
+            if (event.member.isPresent && event.member.get().id == botId) {
+                return@runBlocking
+            } else if (!event.message.userMentionIds.contains(botId)) {
+                return@runBlocking
             }
+
+            if (event.message.content.endsWith("!count")) {
+                with(movieWatchingRepository.getCountOfWatchedMovies()) {
+                    sendMessage("$this movies finished", event.message.channelId)
+                }
+                return@runBlocking
+            }
+
+            if (attemptWatchSearch(event)) {
+                return@runBlocking
+            }
+
+            // no match, send help text
+            sendMessage(
+                "Command not matched, valid commands:\n!count\n!watched <search text>",
+                event.message.channelId,
+            )
             return@runBlocking
         }
 
-        if (attemptWatchSearch(event))
-            return@runBlocking
-
-        // no match, send help text
-        sendMessage(
-            "Command not matched, valid commands:\n!count\n!watched <search text>",
-            event.message.channelId
-        )
-        return@runBlocking
-    }
-
     private fun handleReady(event: ReadyEvent) {
-        logger.info("Logged in as ${event.self.username}#${event.self.discriminator}")
+        logger.info("Logged in as ${event.self.username}#${event.self.tag}")
     }
 
     private fun handleDisconnect(event: DisconnectEvent) {

@@ -13,21 +13,22 @@ import javax.inject.Named
 
 @ChangeUnit(id = "name-text-index", order = "2", author = "tmapes")
 class NameIndexChangelog(
-    @Named("movieCollection") private val movieCollection: CoroutineCollection<MovieWatchingEntity>
+    @Named("movieCollection") private val movieCollection: CoroutineCollection<MovieWatchingEntity>,
 ) {
-
     @Execution
-    fun execute(): Unit = runBlocking(Dispatchers.IO) {
-        movieCollection.createIndex(
-            Document(mapOf("name" to "text")),
-            IndexOptions().background(false)
-        )
-    }
+    fun execute(): Unit =
+        runBlocking(Dispatchers.IO) {
+            movieCollection.createIndex(
+                Document(mapOf("name" to "text")),
+                IndexOptions().background(false),
+            )
+        }
 
     @RollbackExecution
-    fun rollback(): Unit = runBlocking(Dispatchers.IO) {
-        movieCollection.dropIndex(
-            Document(mapOf("name" to "text")),
-        )
-    }
+    fun rollback(): Unit =
+        runBlocking(Dispatchers.IO) {
+            movieCollection.dropIndex(
+                Document(mapOf("name" to "text")),
+            )
+        }
 }

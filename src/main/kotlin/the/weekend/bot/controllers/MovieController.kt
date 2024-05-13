@@ -10,9 +10,8 @@ import the.weekend.bot.services.MovieWatchingService
 
 @Controller
 class MovieController(
-    private val movieWatchingService: MovieWatchingService
+    private val movieWatchingService: MovieWatchingService,
 ) {
-
     @Put("/start_movie")
     @Status(HttpStatus.ACCEPTED)
     suspend fun startMovie(): Movie? {

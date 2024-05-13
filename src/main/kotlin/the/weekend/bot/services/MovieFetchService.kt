@@ -28,10 +28,11 @@ class MovieFetchService(
             return null
         }
 
-        val discoveredMovie = discoveredMovies.results.firstOrNull {
-            it.releaseDate.isAfter(EARLIEST_MOVIE_RELEASE) &&
-                movieWatchingRepository.getMovieByTmdbId(it.id) == null
-        } ?: return null
+        val discoveredMovie =
+            discoveredMovies.results.firstOrNull {
+                it.releaseDate.isAfter(EARLIEST_MOVIE_RELEASE) &&
+                    movieWatchingRepository.getMovieByTmdbId(it.id) == null
+            } ?: return null
 
         try {
             val nextMovie =

@@ -11,17 +11,18 @@ import the.weekend.bot.mappers.TmdbMovieMapper
 class MoviePostingService(
     private val discordEventService: DiscordEventService,
     private val movieDatabaseClient: MovieDatabaseClient,
-    @Value("\${discord.movie-channel-id}") private val movieChannelId: Long
+    @Value("\${discord.movie-channel-id}") private val movieChannelId: Long,
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     suspend fun postStartingMovie(movie: Movie) {
-        val tmdbMovie = try {
-            movieDatabaseClient.getMovieById(movie.tmdbId).body()
-        } catch (ex: Exception) {
-            logger.warn("Failed to lookup '${movie.title} (id: ${movie.tmdbId}) on TMBD", ex)
-            null
-        }
+        val tmdbMovie =
+            try {
+                movieDatabaseClient.getMovieById(movie.tmdbId).body()
+            } catch (ex: Exception) {
+                logger.warn("Failed to lookup '${movie.title} (id: ${movie.tmdbId}) on TMBD", ex)
+                null
+            }
 
         val embedData = TmdbMovieMapper.toEmbedData(movie, tmdbMovie)
 

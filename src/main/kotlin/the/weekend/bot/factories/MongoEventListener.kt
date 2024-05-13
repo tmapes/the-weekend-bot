@@ -7,8 +7,7 @@ import org.litote.kmongo.coroutine.CoroutineClient
 
 @Singleton
 class MongoEventListener(
-    private val mongoClient: CoroutineClient
+    private val mongoClient: CoroutineClient,
 ) : ApplicationEventListener<ApplicationShutdownEvent> {
-
     override fun onApplicationEvent(event: ApplicationShutdownEvent?) = mongoClient.close()
 }

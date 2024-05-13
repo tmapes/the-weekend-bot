@@ -11,18 +11,19 @@ import the.weekend.bot.configs.MongoConfiguration
 import javax.inject.Named
 
 @ChangeUnit(id = "collection-init", order = "1", author = "tmapes")
-class CollectionChangeUnit(
+class CreateCollectionChangelog(
     @Named("mongoDatabase") private val mongoDatabase: CoroutineDatabase,
-    @Named("mongoConfiguration") private val mongoConfiguration: MongoConfiguration
+    @Named("mongoConfiguration") private val mongoConfiguration: MongoConfiguration,
 ) {
-
     @Execution
-    fun execute() = runBlocking(Dispatchers.IO) {
-        mongoDatabase.createCollection(mongoConfiguration.collectionName)
-    }
+    fun execute() =
+        runBlocking(Dispatchers.IO) {
+            mongoDatabase.createCollection(mongoConfiguration.collectionName)
+        }
 
     @RollbackExecution
-    fun rollback() = runBlocking(Dispatchers.IO) {
-        mongoDatabase.getCollection<Document>(mongoConfiguration.collectionName).drop()
-    }
+    fun rollback() =
+        runBlocking(Dispatchers.IO) {
+            mongoDatabase.getCollection<Document>(mongoConfiguration.collectionName).drop()
+        }
 }

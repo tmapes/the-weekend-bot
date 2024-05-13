@@ -16,23 +16,23 @@ class ChangelogRunner(
     private val mongoConfiguration: MongoConfiguration,
     private val mongoClient: CoroutineClient,
     private val mongoDatabase: CoroutineDatabase,
-    private val movieCollection: CoroutineCollection<MovieWatchingEntity>
+    private val movieCollection: CoroutineCollection<MovieWatchingEntity>,
 ) : ApplicationEventListener<ServerStartupEvent> {
-
     override fun onApplicationEvent(event: ServerStartupEvent) {
-        val mongockRunner = MongockStandalone.builder()
-            .setDriver(
-                MongoReactiveDriver.withDefaultLock(
-                    mongoClient.client,
-                    mongoConfiguration.databaseName
+        val mongockRunner =
+            MongockStandalone.builder()
+                .setDriver(
+                    MongoReactiveDriver.withDefaultLock(
+                        mongoClient.client,
+                        mongoConfiguration.databaseName,
+                    ),
                 )
-            )
-            .addMigrationScanPackage("the.weekend.bot.changelogs")
-            .addDependency("mongoConfiguration", mongoConfiguration)
-            .addDependency("mongoDatabase", mongoDatabase)
-            .addDependency("movieCollection", movieCollection)
-            .setTransactionEnabled(true)
-            .buildRunner()
+                .addMigrationScanPackage("the.weekend.bot.changelogs")
+                .addDependency("mongoConfiguration", mongoConfiguration)
+                .addDependency("mongoDatabase", mongoDatabase)
+                .addDependency("movieCollection", movieCollection)
+                .setTransactionEnabled(true)
+                .buildRunner()
 
         mongockRunner.execute()
     }

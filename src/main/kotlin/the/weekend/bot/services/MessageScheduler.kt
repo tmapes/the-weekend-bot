@@ -6,9 +6,8 @@ import org.slf4j.LoggerFactory
 
 @Singleton
 class MessageScheduler(
-    private val discordEventService: DiscordEventService
+    private val discordEventService: DiscordEventService,
 ) {
-
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @Scheduled(cron = "\${discord.schedule}")
