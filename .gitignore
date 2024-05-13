@@ -14,3 +14,4 @@ out/
 .factorypath
 
 application-local.yml
+http-client.private.env.json
