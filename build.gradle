@@ -9,7 +9,7 @@ plugins {
 }
 
 version = "0.1"
-group = "the.weekend.bot"
+group = "info.mapes.weekend"
 
 repositories {
     maven { url "https://binrepo.mapes.info/repository/maven-central/" }
@@ -20,7 +20,7 @@ micronaut {
     runtime("netty")
     processing {
         incremental(true)
-        annotations("the.weekend.bot.*")
+        annotations("info.mapes.weekend.*")
     }
 }
 
@@ -47,7 +47,7 @@ allOpen {
 }
 
 application {
-    mainClass.set("the.weekend.bot.ApplicationKt")
+    mainClass.set("info.mapes.weekend.ApplicationKt")
 }
 
 kotlin {
