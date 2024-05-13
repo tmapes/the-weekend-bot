@@ -1,5 +1,7 @@
 package info.mapes.weekend.changelogs
 
+import info.mapes.weekend.configs.MongoConfiguration
+import info.mapes.weekend.entities.MovieWatchingEntity
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
 import io.mongock.driver.mongodb.reactive.driver.MongoReactiveDriver
@@ -8,8 +10,6 @@ import jakarta.inject.Singleton
 import org.litote.kmongo.coroutine.CoroutineClient
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.coroutine.CoroutineDatabase
-import info.mapes.weekend.configs.MongoConfiguration
-import info.mapes.weekend.entities.MovieWatchingEntity
 
 @Singleton
 class ChangelogRunner(

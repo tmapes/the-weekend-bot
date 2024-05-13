@@ -1,14 +1,14 @@
 package info.mapes.weekend.services
 
+import info.mapes.weekend.domains.Movie
+import info.mapes.weekend.repositories.MovieWatchingRepository
+import info.mapes.weekend.utils.letOrElse
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
 import jakarta.inject.Singleton
 import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import info.mapes.weekend.domains.Movie
-import info.mapes.weekend.repositories.MovieWatchingRepository
-import info.mapes.weekend.utils.letOrElse
 import java.time.Clock
 import java.time.Instant
 

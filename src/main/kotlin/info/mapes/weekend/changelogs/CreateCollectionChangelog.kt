@@ -1,5 +1,6 @@
 package info.mapes.weekend.changelogs
 
+import info.mapes.weekend.configs.MongoConfiguration
 import io.mongock.api.annotations.ChangeUnit
 import io.mongock.api.annotations.Execution
 import io.mongock.api.annotations.RollbackExecution
@@ -7,7 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.bson.Document
 import org.litote.kmongo.coroutine.CoroutineDatabase
-import info.mapes.weekend.configs.MongoConfiguration
 import javax.inject.Named
 
 @ChangeUnit(id = "collection-init", order = "1", author = "tmapes")

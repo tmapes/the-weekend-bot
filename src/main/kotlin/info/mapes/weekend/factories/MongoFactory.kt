@@ -1,5 +1,7 @@
 package info.mapes.weekend.factories
 
+import info.mapes.weekend.configs.MongoConfiguration
+import info.mapes.weekend.entities.MovieWatchingEntity
 import io.micronaut.context.annotation.Factory
 import jakarta.inject.Singleton
 import org.litote.kmongo.coroutine.CoroutineClient
@@ -7,8 +9,6 @@ import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
-import info.mapes.weekend.configs.MongoConfiguration
-import info.mapes.weekend.entities.MovieWatchingEntity
 
 @Factory
 class MongoFactory {

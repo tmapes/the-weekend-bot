@@ -1,8 +1,8 @@
 package info.mapes.weekend.utils
 
 import discord4j.core.event.domain.message.MessageCreateEvent
-import io.micronaut.core.util.StringUtils
 import info.mapes.weekend.utils.Constants.WATCHED_PATTERN
+import io.micronaut.core.util.StringUtils
 
 inline fun <T, R> T?.letOrElse(
     nonNull: (T) -> R,

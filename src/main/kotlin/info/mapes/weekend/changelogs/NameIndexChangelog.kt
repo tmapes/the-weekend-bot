@@ -1,6 +1,7 @@
 package info.mapes.weekend.changelogs
 
 import com.mongodb.client.model.IndexOptions
+import info.mapes.weekend.entities.MovieWatchingEntity
 import io.mongock.api.annotations.ChangeUnit
 import io.mongock.api.annotations.Execution
 import io.mongock.api.annotations.RollbackExecution
@@ -8,7 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.bson.Document
 import org.litote.kmongo.coroutine.CoroutineCollection
-import info.mapes.weekend.entities.MovieWatchingEntity
 import javax.inject.Named
 
 @ChangeUnit(id = "name-text-index", order = "2", author = "tmapes")

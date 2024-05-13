@@ -1,12 +1,12 @@
 package info.mapes.weekend.clients
 
+import info.mapes.weekend.models.TmdbMovie
+import info.mapes.weekend.models.TmdbMovieDiscoveryResponse
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.QueryValue
 import io.micronaut.http.client.annotation.Client
-import info.mapes.weekend.models.TmdbMovie
-import info.mapes.weekend.models.TmdbMovieDiscoveryResponse
 
 @Client("the-movie-database")
 interface MovieDatabaseClient {

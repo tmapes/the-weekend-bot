@@ -10,15 +10,15 @@ import discord4j.core.`object`.presence.ClientActivity
 import discord4j.core.`object`.presence.ClientPresence.online
 import discord4j.discordjson.json.EmbedData
 import discord4j.discordjson.json.MessageCreateRequest
+import info.mapes.weekend.configs.DiscordClientConfiguration
+import info.mapes.weekend.repositories.MovieWatchingRepository
+import info.mapes.weekend.utils.getWatchedQuery
 import io.micronaut.context.annotation.Context
 import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import reactor.core.scheduler.Schedulers
-import info.mapes.weekend.configs.DiscordClientConfiguration
-import info.mapes.weekend.repositories.MovieWatchingRepository
-import info.mapes.weekend.utils.getWatchedQuery
 
 @Context
 class DiscordEventService(

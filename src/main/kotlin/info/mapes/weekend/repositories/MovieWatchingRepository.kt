@@ -2,13 +2,13 @@ package info.mapes.weekend.repositories
 
 import com.mongodb.client.model.Filters.text
 import com.mongodb.client.model.ReplaceOptions
+import info.mapes.weekend.entities.MovieWatchingEntity
 import jakarta.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import org.litote.kmongo.and
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 import org.litote.kmongo.ne
-import info.mapes.weekend.entities.MovieWatchingEntity
 
 @Singleton
 class MovieWatchingRepository(

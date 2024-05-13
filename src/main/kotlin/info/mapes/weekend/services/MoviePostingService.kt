@@ -1,11 +1,11 @@
 package info.mapes.weekend.services
 
-import io.micronaut.context.annotation.Value
-import jakarta.inject.Singleton
-import org.slf4j.LoggerFactory
 import info.mapes.weekend.clients.MovieDatabaseClient
 import info.mapes.weekend.domains.Movie
 import info.mapes.weekend.mappers.TmdbMovieMapper
+import io.micronaut.context.annotation.Value
+import jakarta.inject.Singleton
+import org.slf4j.LoggerFactory
 
 @Singleton
 class MoviePostingService(

@@ -1,12 +1,12 @@
 package info.mapes.weekend.controllers
 
+import info.mapes.weekend.domains.Movie
+import info.mapes.weekend.services.MovieWatchingService
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Put
 import io.micronaut.http.annotation.Status
-import info.mapes.weekend.domains.Movie
-import info.mapes.weekend.services.MovieWatchingService
 
 @Controller
 class MovieController(
