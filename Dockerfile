@@ -7,7 +7,7 @@ RUN wget -qO /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases
 
 COPY build/docker/main/layers/libs /app/libs
 COPY build/docker/main/layers/resources /app/resources
-COPY build/docker/main/layers/application.jar /app/application.jar
+COPY build/docker/main/layers/app/application.jar /app/application.jar
 
 ENTRYPOINT [ "/usr/local/bin/dumb-init", "--" ]
 CMD ["java", "-jar", "/app/application.jar"]
