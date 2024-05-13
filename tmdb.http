@@ -1,13 +1,26 @@
 ### Get a single movie
 # @no-log
 # @no-cookie-jar
-GET https://api.themoviedb.org/3/movie/50270?append_to_response=credits,images
+GET https://api.themoviedb.org/3/movie/967585?append_to_response=credits,images
 Authorization: Bearer {{tmdb_token}}
 Connection: close
 
 ### Get top rated movies
 # @no-cookie-jar
 # @no-log
-GET https://api.themoviedb.org/3/movie/top_rated?language=en-US&region=US&page=500
+GET https://api.themoviedb.org/3/movie/top_rated?language=en-US&region=US&page=400
 Authorization: Bearer {{tmdb_token}}
 Connection: close
+
+### Discover movies
+# @no-cookie-jar
+# @no-log
+GET https://api.themoviedb.org/3/discover/movie?with_origin_country=US&with_original_language=en&release_date.gte=1960-01-01
+Authorization: Bearer {{tmdb_token}}
+Connection: close
+
+### Get Exports
+# @no-cookie-jar
+# @no-log
+GET https://files.tmdb.org/p/exports/movie_ids_05_11_2024.json.gz
+Authorization: Bearer {{tmdb_token}}
