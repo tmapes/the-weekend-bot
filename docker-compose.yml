@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    image: docker.internal.mapes.info/the-weekend-bot:b12-ddcc597e
+    image: tjmapes/the-weekend-bot:b47-116995e9
     ports:
       - "8080:8080"
     volumes:
@@ -10,7 +10,7 @@ services:
       - MICRONAUT_ENVIRONMENTS=local
       - DISCORD_SCHEDULE=0/10 * * * * *
   mongo:
-    image: docker.mapes.info/mongo:4.2.8
+    image: mongo:4.2.8
     ports:
       - "27017:27017"
     environment:
