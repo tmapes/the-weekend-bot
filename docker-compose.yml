@@ -10,7 +10,7 @@ services:
       - MICRONAUT_ENVIRONMENTS=local
       - DISCORD_SCHEDULE=0/10 * * * * *
   mongo:
-    image: mongo:7.0.11@sha256:108cd0d7867ba32559a3a2c4b353183f7076042369a85c67aab3f7c52dfc2783
+    image: mongo:7.0.11@sha256:7b225d4ae2df7cf98812f27f5d0d98054efaf9bfd4cc79c7e3e0bed1c1d3bf45
     ports:
       - "27017:27017"
     environment:
