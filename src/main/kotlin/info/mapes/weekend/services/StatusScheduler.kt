@@ -12,10 +12,15 @@ class StatusScheduler(
     @Scheduled(fixedRate = "1m", initialDelay = "1m")
     fun updateStatus() =
         runBlocking {
-            movieWatchingService.getOrStartMovie()?.let {
-                discordEventService.setStatus(
-                    it.toDiscordText(),
-                )
+            val currentMovie = movieWatchingService.getOrStartMovie()
+            if (currentMovie != null) {
+                discordEventService.setStatus(currentMovie.toDiscordText(), true)
+            } else {
+                discordEventService.setStatus(SEARCHING_STATUS_TEXT, false)
             }
         }
+
+    companion object {
+        const val SEARCHING_STATUS_TEXT = "Searching for a Movie"
+    }
 }

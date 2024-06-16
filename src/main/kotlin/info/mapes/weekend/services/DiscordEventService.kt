@@ -75,9 +75,13 @@ class DiscordEventService(
         client.rest().getChannelById(channelSnowflake).createMessage(messageCreateRequest).block()
     }
 
-    fun setStatus(movieText: String) {
+    fun setStatus(
+        text: String,
+        watching: Boolean,
+    ) {
+        val activity = if (watching) ClientActivity.watching(text) else ClientActivity.custom(text)
         client.updatePresence(
-            online(ClientActivity.watching(movieText)),
+            online(activity),
         ).block()
     }
 
