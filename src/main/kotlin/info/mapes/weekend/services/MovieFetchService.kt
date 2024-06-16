@@ -30,8 +30,7 @@ class MovieFetchService(
 
         val discoveredMovie =
             discoveredMovies.results.firstOrNull {
-                it.releaseDate.isAfter(EARLIEST_MOVIE_RELEASE) &&
-                    movieWatchingRepository.getMovieByTmdbId(it.id) == null
+                movieWatchingRepository.getMovieByTmdbId(it.id) == null
             } ?: return null
 
         try {
