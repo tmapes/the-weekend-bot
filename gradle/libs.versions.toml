@@ -1,0 +1,40 @@
+[versions]
+coroutines = "1.8.1"
+discord4j = "3.2.6"
+kmongo = "5.1.0"
+kotlin = "1.9.24"
+ksp = "1.9.24-1.0.20"
+ktlint = "12.1.1"
+micronaut = "4.4.1"
+micronaut-plugin = "4.4.0"
+mongock = "5.4.2"
+
+[libraries]
+discord4j = { module = "com.discord4j:discord4j-core", version.ref = "discord4j" }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
+kmongo-coroutine = { module = "org.litote.kmongo:kmongo-coroutine", version.ref = "kmongo" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+logback-classic = { module = "ch.qos.logback:logback-classic" }
+micronaut-http-client = { module = "io.micronaut:micronaut-http-client" }
+micronaut-jackson-databind = { module = "io.micronaut:micronaut-jackson-databind" }
+micronaut-kotlin-runtime = { module = "io.micronaut.kotlin:micronaut-kotlin-runtime" }
+micronaut-management = { module = "io.micronaut:micronaut-management" }
+micronaut-runtime = { module = "io.micronaut:micronaut-runtime" }
+mongock-reactive = { module = "io.mongock:mongodb-reactive-driver", version.ref = "mongock" }
+mongock-standalone = { module = "io.mongock:mongock-standalone", version.ref = "mongock" }
+snakeyaml = { module = "org.yaml:snakeyaml" }
+
+[bundles]
+kotlin = ["kotlin-reflect", "kotlin-stdlib-jdk8"]
+micronaut = ["micronaut-http-client", "micronaut-jackson-databind", "micronaut-kotlin-runtime", "micronaut-management", "micronaut-runtime"]
+mongock = ["mongock-standalone", "mongock-reactive"]
+
+[plugins]
+allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
+jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+micronaut-docker = { id = "io.micronaut.docker", version.ref = "micronaut-plugin" }
+micronaut-minimal-application = { id = "io.micronaut.minimal.application", version.ref = "micronaut-plugin" }
