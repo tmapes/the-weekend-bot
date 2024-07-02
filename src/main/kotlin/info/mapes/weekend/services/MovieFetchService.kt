@@ -17,7 +17,7 @@ class MovieFetchService(
 
     suspend fun getNextMovie(): Movie? {
         val page = (1..maxPage).random()
-        val discoveredMovies = movieDatabaseClient.topRatedMovies(page = page)
+        val discoveredMovies = movieDatabaseClient.discoverMovies(page = page)
 
         if (maxPage != discoveredMovies.totalPages) {
             logger.info("Max TMDB page updated to ${discoveredMovies.totalPages}")

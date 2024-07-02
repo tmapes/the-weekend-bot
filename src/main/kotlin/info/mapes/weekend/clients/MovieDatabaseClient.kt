@@ -10,10 +10,10 @@ import io.micronaut.http.client.annotation.Client
 
 @Client("the-movie-database")
 interface MovieDatabaseClient {
-    @Get("/3/movie/top_rated")
-    suspend fun topRatedMovies(
+    @Get("/3/discover/movie")
+    suspend fun discoverMovies(
         @QueryValue("page") page: Int,
-        @QueryValue("language") language: String = "en-US",
+        @QueryValue("language") language: String = "en",
         @QueryValue("region") region: String = "US",
     ): TmdbMovieDiscoveryResponse
 
@@ -21,5 +21,5 @@ interface MovieDatabaseClient {
     suspend fun getMovieById(
         @PathVariable("movie_id") movieId: Int,
         @QueryValue("append_to_response") appendToResponse: Set<String> = setOf("credits", "images"),
-    ): HttpResponse<TmdbMovie>
+    ): HttpResponse<TmdbMovie?>
 }
