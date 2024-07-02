@@ -45,5 +45,4 @@ class MovieFetchService(
         }
         return null
     }
-
 }
