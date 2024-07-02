@@ -5,7 +5,6 @@ import info.mapes.weekend.domains.Movie
 import info.mapes.weekend.repositories.MovieWatchingRepository
 import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
-import java.time.LocalDate
 
 @Singleton
 class MovieFetchService(
@@ -47,7 +46,4 @@ class MovieFetchService(
         return null
     }
 
-    companion object {
-        private val EARLIEST_MOVIE_RELEASE = LocalDate.of(1960, 1, 1)
-    }
 }
