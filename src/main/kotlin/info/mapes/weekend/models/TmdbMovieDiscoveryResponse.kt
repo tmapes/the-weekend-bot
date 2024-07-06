@@ -9,7 +9,6 @@ import java.time.LocalDate
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class TmdbMovieDiscoveryResponse(
     val results: List<TmdbDiscoveredMovie>,
-    val totalPages: Int,
 )
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)

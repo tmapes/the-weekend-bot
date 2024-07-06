@@ -3,6 +3,7 @@ package info.mapes.weekend.services
 import info.mapes.weekend.clients.MovieDatabaseClient
 import info.mapes.weekend.domains.Movie
 import info.mapes.weekend.repositories.MovieWatchingRepository
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
 
@@ -12,16 +13,18 @@ class MovieFetchService(
     private val movieWatchingRepository: MovieWatchingRepository,
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
-    private var maxPage: Int = 500 // Start at 500 and dynamically change based on TMDB responses.
 
     suspend fun getNextMovie(): Movie? {
-        val page = (1..maxPage).random()
-        val discoveredMovies = movieDatabaseClient.discoverMovies(page = page)
+        val page = (1..MAX_PAGE).random()
+        val discoveredMovies =
+            try {
+                movieDatabaseClient.discoverMovies(page = page)
+            } catch (ex: HttpClientResponseException) {
+                val responseBody = ex.response.getBody(String::class.java).orElse("<no body>")
+                logger.error("Received status '${ex.status.code}' from discover call. Response Body:\n$responseBody", ex)
+                return null
+            }
 
-        if (maxPage != discoveredMovies.totalPages) {
-            logger.info("Max TMDB page updated to ${discoveredMovies.totalPages}")
-        }
-        maxPage = discoveredMovies.totalPages // update maxPage to the page returned by TMDB
         if (discoveredMovies.results.isEmpty()) {
             logger.error("Null/Empty Body from TMDB, body: '$discoveredMovies'")
             return null
@@ -44,5 +47,10 @@ class MovieFetchService(
             logger.error("Uber failed to get data for $discoveredMovie", ex)
         }
         return null
+    }
+
+    companion object {
+        // Despite having more than 500 pages of movies available, the TMDB api doesn't allow going above that.
+        private const val MAX_PAGE: Int = 500
     }
 }
