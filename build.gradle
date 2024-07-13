@@ -43,6 +43,12 @@ application {
     mainClass.set("info.mapes.weekend.ApplicationKt")
 }
 
+tasks.build {
+    // we use buildLayers, not the distributions
+    distTar.enabled = false
+    distZip.enabled = false
+}
+
 kotlin {
     jvmToolchain(21)
 }

@@ -10,7 +10,7 @@ steps:
     image: eclipse-temurin:21.0.3_9-jdk-alpine@sha256:68a8a4ad547e750f497824540d90ff29d4b819a6a6287a5eb1b03a71e4c2167b
     pull: not_present
     commands:
-      - ./gradlew clean build -x distTar -x distZip
+      - ./gradlew clean build
 
   - name: build image dry run
     image: target/vela-kaniko:v0.17.0@sha256:56d8499175eb5a1b5342a86f706b87bff89878d2e5a5d835dcb9ffaa21836d19
