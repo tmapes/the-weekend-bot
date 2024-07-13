@@ -13,7 +13,7 @@ interface MovieDatabaseClient {
     @Get("/3/discover/movie")
     suspend fun discoverMovies(
         @QueryValue("page") page: Int,
-        @QueryValue("language") language: String = "en",
+        @QueryValue("with_original_language") originalLanguage: String = "en",
         @QueryValue("region") region: String = "US",
         @QueryValue("with_runtime.gte") runtimeMinutesGreaterThan: String = "60",
     ): TmdbMovieDiscoveryResponse

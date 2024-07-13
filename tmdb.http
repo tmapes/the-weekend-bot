@@ -15,7 +15,7 @@ Connection: close
 ### Discover movies
 # @no-cookie-jar
 # @no-log
-GET https://api.themoviedb.org/3/discover/movie?language=en&region=US
+GET https://api.themoviedb.org/3/discover/movie?with_original_language=en&region=US
 Authorization: Bearer {{tmdb_token}}
 Connection: close
 
