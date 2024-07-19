@@ -6,7 +6,7 @@ kotlin = "2.0.0"
 ksp = "2.0.0-1.0.23"
 ktlint = "12.1.1"
 micronaut = "4.5.0"
-micronaut-plugin = "4.4.1"
+micronaut-plugin = "4.4.2"
 mongock = "5.4.4"
 
 [libraries]
