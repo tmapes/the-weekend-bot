@@ -7,7 +7,7 @@ metadata:
 steps:
 
   - name: build
-    image: eclipse-temurin:21.0.4_7-jdk-alpine@sha256:18155fe2bdf0132452a3b829fd984ccbb8513270d54c3c3596db158c6e1781d5
+    image: eclipse-temurin:21.0.4_7-jdk-alpine@sha256:41336eaafc9c5fe5dce03c24473bd480be425b4d3aa402528595d2e7f46d6d99
     pull: not_present
     commands:
       - ./gradlew clean build
