@@ -7,7 +7,7 @@ ksp = "2.0.21-1.0.25"
 ktlint = "12.1.1"
 micronaut = "4.5.0"
 micronaut-plugin = "4.4.3"
-mongock = "5.4.4"
+mongock = "5.5.0"
 
 [libraries]
 discord4j = { module = "com.discord4j:discord4j-core", version.ref = "discord4j" }
