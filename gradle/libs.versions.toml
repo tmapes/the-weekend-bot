@@ -1,12 +1,12 @@
 [versions]
 coroutines = "1.9.0"
-discord4j = "3.2.6"
+discord4j = "3.2.7"
 kmongo = "5.1.0"
 kotlin = "2.0.21"
-ksp = "2.0.21-1.0.26"
+ksp = "2.0.21-1.0.28"
 ktlint = "12.1.1"
 micronaut = "4.5.0"
-micronaut-plugin = "4.4.3"
+micronaut-plugin = "4.4.4"
 mongock = "5.5.0"
 
 [libraries]
