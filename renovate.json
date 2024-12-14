@@ -15,7 +15,7 @@
             "customType": "regex",
             "fileMatch": ["^gradle/libs.versions.toml$"],
             "matchStrings": [
-                "# renovate: depName=(?<depName>.*?)\\s\\S+?\\S+\\s=\\s\"(?<currentVersion>\\S+)\""
+                "# renovate: depName=(?<depName>.*?)\\s\\S+?\\S+\\s=\\s\"(?<currentValue>\\S+)\""
             ],
             "datasourceTemplate": "github-tags",
             "versioningTemplate": "semver"
