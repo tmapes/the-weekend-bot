@@ -13,7 +13,7 @@
     "customManagers": [
         {
             "customType": "regex",
-            "fileMatch": ["libs.versions.toml"],
+            "fileMatch": ["^gradle/libs.versions.toml$"],
             "matchStrings": [
                 "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s\\S+?:(?<currentValue>\\S+)\\s+\\S+:.+",
                 "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s\\S+?:\\S+\\s+\\S+:(?<currentValue>\\S+)"
