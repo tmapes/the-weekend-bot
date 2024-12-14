@@ -5,9 +5,9 @@ kmongo = "5.1.0"
 kotlin = "2.1.0"
 ksp = "2.1.0-1.0.29"
 ktlint = "12.1.2"
-# renovate: datasource=github-tags depName=micronaut-projects/micronaut-platform versioning=semver
+# renovate: depName=micronaut-projects/micronaut-platform
 micronaut = "4.7.2"
-# renovate: datasource=github-tags depName=micronaut-projects/micronaut-core versioning=semver
+# renovate: depName=micronaut-projects/micronaut-core
 micronaut-core = "4.7.8"
 micronaut-plugin = "4.4.4"
 mongock = "5.5.0"

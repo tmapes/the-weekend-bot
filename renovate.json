@@ -15,10 +15,10 @@
             "customType": "regex",
             "fileMatch": ["^gradle/libs.versions.toml$"],
             "matchStrings": [
-                "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s\\S+?:(?<currentValue>\\S+)\\s+\\S+:.+",
-                "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s\\S+?:\\S+\\s+\\S+:(?<currentValue>\\S+)"
+                "# renovate: depName=(?<depName>.*?)\\s\\S+?\\S+\\s=\\s\"(?<currentVersion>\\S+)\""
             ],
-            "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+            "datasourceTemplate": "github-tags",
+            "versioningTemplate": "semver"
         }
     ]
 }
