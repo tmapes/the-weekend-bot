@@ -31,7 +31,7 @@ class ChangelogRunner(
                 .addDependency("mongoConfiguration", mongoConfiguration)
                 .addDependency("mongoDatabase", mongoDatabase)
                 .addDependency("movieCollection", movieCollection)
-                .setTransactionEnabled(false)
+                .setTransactional(false)
                 .buildRunner()
 
         mongockRunner.execute()

@@ -16,6 +16,7 @@ repositories {
 }
 
 micronaut {
+    coreVersion.set(libs.versions.micronaut.core)
     runtime("netty")
     processing {
         incremental(true)
