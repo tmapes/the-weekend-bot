@@ -138,9 +138,9 @@ class DiscordEventService(
             logger.info("Searching for '$watchQuery' matched $movieCount movies")
             if (movieCount <= 0) {
                 sendMessage("No movies watched matching '$watchQuery'", event.message.channelId)
-                return true
+            } else {
+                sendMessage(sb.toString(), event.message.channelId)
             }
-            sendMessage(sb.toString(), event.message.channelId)
             return true
         }
         return false
