@@ -43,6 +43,9 @@ class MovieWatchingRepository(
     }
 
     fun searchForWatchedMovie(searchText: String): Flow<MovieWatchingEntity> {
-        return movieCollection.find(text(searchText)).toFlow()
+        return movieCollection
+            .find(text(searchText))
+            .sort(MovieWatchingEntity::year eq 1)
+            .toFlow()
     }
 }
