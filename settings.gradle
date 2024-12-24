@@ -1,8 +1,8 @@
-pluginManagement {
-    repositories {
-        maven {
-            url "https://binrepo.mapes.info/repository/gradle/"
-        }
-    }
-}
+// pluginManagement {
+    // repositories {
+        // maven {
+            // url "https://binrepo.mapes.info/repository/gradle/"
+        // }
+    // }
+// }
 rootProject.name="the-weekend-bot"

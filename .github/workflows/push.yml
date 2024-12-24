@@ -1,0 +1,7 @@
+name: Gradle build on push
+
+on: push
+
+jobs:
+  build:
+    uses: ./.github/workflows/gradle_build.yml
