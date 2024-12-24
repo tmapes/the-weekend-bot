@@ -12,7 +12,7 @@ group = "info.mapes.weekend"
 
 repositories {
     mavenCentral()
-    gradle()
+    gradlePluginPortal()
     // maven { url "https://binrepo.mapes.info/repository/maven-central/" }
     // maven { url "https://binrepo.mapes.info/repository/gradle/" }
 }
