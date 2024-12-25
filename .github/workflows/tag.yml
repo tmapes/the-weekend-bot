@@ -25,4 +25,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: tjmapes/the-weekend-bot:${{ github.event.release.tag_name }}
+          tags: tjmapes/the-weekend-bot:${{ github.ref_name }}
