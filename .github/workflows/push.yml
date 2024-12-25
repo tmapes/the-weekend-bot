@@ -8,5 +8,3 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/gradle_build.yml
-    secrets:
-      inherit: true
