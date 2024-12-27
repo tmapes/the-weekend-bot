@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    image: tjmapes/the-weekend-bot:b47-116995e9
+    image: tjmapes/the-weekend-bot:b47-116995e9@sha256:3b782bf4b90c2aa2e692f8b05b9be46db57d46d7ddcbdc7b734f097960ea9153
     ports:
       - "8080:8080"
     volumes:
