@@ -1,7 +1,7 @@
 [versions]
 coroutines = "1.10.1"
 discord4j = "3.2.7"
-kmongo = "5.1.0"
+kmongo = "5.2.0"
 kotlin = "2.1.0"
 ksp = "2.1.0-1.0.29"
 ktlint = "12.1.2"
