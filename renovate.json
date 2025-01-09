@@ -1,24 +1,6 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-        "config:best-practices",
-        "config:recommended",
-        "group:monorepos",
-        "group:recommended",
-        "group:allNonMajor"
-    ],
-    "digest": {
-        "automerge": true
-    },
-    "customManagers": [
-        {
-            "customType": "regex",
-            "fileMatch": ["^gradle/libs.versions.toml$"],
-            "matchStrings": [
-                "# renovate: depName=(?<depName>.*?)\\s\\S+?\\S+\\s=\\s\"(?<currentValue>\\S+)\""
-            ],
-            "datasourceTemplate": "github-tags",
-            "versioningTemplate": "semver"
-        }
+        "github>tmapes/renovate-config"
     ]
 }
