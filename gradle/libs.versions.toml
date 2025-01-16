@@ -8,7 +8,7 @@ ktlint = "12.1.2"
 # renovate: depName=micronaut-projects/micronaut-platform
 micronaut = "4.7.4"
 # renovate: depName=micronaut-projects/micronaut-core
-micronaut-core = "4.7.11"
+micronaut-core = "4.7.12"
 micronaut-plugin = "4.4.5"
 mongock = "5.5.0"
 
