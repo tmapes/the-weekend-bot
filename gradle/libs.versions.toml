@@ -2,13 +2,13 @@
 coroutines = "1.10.1"
 discord4j = "3.2.7"
 kmongo = "5.2.1"
-kotlin = "2.1.0"
-ksp = "2.1.0-1.0.29"
+kotlin = "2.1.10"
+ksp = "2.1.10-1.0.29"
 ktlint = "12.1.2"
 # renovate: depName=micronaut-projects/micronaut-platform
 micronaut = "4.7.4"
 # renovate: depName=micronaut-projects/micronaut-core
-micronaut-core = "4.7.12"
+micronaut-core = "4.7.13"
 micronaut-plugin = "4.4.5"
 mongock = "5.5.0"
 
