@@ -13,7 +13,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@c94eb9d32c39fe014e838aa5efdcc186a8ba7e53
+        uses: gradle/actions/setup-gradle@261794afacfbe7a93883fe9e989f80e083e3547f
 
       - name: Build with Gradle Wrapper
         run: ./gradlew build
